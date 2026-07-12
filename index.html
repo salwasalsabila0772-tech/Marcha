@@ -88,7 +88,7 @@
                 <div onclick="navigateTo('profile')" class="flex items-center space-x-2 cursor-pointer p-1 rounded-xl hover:bg-blue-50 dark:hover:bg-[#10284F] transition">
                     <img id="user-avatar" src="https://placehold.co/100x100/4DA6FF/ffffff?text=Cindy" alt="Cindy Avatar" class="w-9 h-9 rounded-xl border-2 border-[#4DA6FF] shadow-sm">
                     <div class="hidden md:block text-left">
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white" id="nav-user-name">Cindy Nor Afita Sari</h4>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white" id="nav-user-name">Cindy Nor</h4>
                         <p class="text-[10px] text-slate-600 dark:text-slate-300 font-medium" id="nav-user-role">Machinist (Int)</p>
                     </div>
                 </div>
@@ -997,81 +997,82 @@
                 </div>
             </section>
 
+            
             <!-- AR SCAN VIEW -->
-            <section id="view-ar-scan" class="view-panel hidden flex flex-col gap-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Scan Drawing or Machine Component</h2>
-                        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Dekatkan kamera ke komponen fisik atau jobsheet untuk me-render model AR interaktif.</p>
-                    </div>
-                    <!-- Select Engine Component -->
-                    <select id="ar-object-select" onchange="changeArObject()" class="bg-white dark:bg-[#10284F] border border-blue-200 dark:border-blue-900 text-xs font-bold py-2 px-3 rounded-lg text-slate-950 dark:text-slate-100">
-                        <option value="lathe">Mesin Bubut Utama (Lathe)</option>
-                        <option value="chuck">Cekam Rahang Tiga (Chuck)</option>
-                        <option value="tailstock">Kepala Lepas (Tailstock)</option>
-                        <option value="gearbox">Transmisi (Gearbox)</option>
-                    </select>
+        <section id="view-ar-scan" class="view-panel hidden flex flex-col gap-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Scan Drawing or Machine Component</h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Dekatkan kamera ke komponen fisik atau jobsheet untuk me-render model AR interaktif.</p>
                 </div>
+                <!-- Select Engine Component -->
+                <select id="ar-object-select" onchange="changeArObject()" class="bg-white dark:bg-[#10284F] border border-blue-200 dark:border-blue-900 text-xs font-bold py-2 px-3 rounded-lg text-slate-950 dark:text-slate-100">
+                    <option value="lathe">Mesin Bubut Utama (Lathe)</option>
+                    <option value="chuck">Cekam Rahang Tiga (Chuck)</option>
+                    <option value="tailstock">Kepala Lepas (Tailstock)</option>
+                    <option value="gearbox">Transmisi (Gearbox)</option>
+                </select>
+            </div>
 
-                <!-- Simulation Screen / Viewport -->
-                <div class="relative bg-slate-950 rounded-3xl overflow-hidden h-[450px] shadow-2xl border-4 border-slate-900 dark:border-[#10284F]">
-                    
-                    <!-- Simulated Live Camera Screen Overlay -->
-                    <div class="absolute inset-0 bg-cover bg-center pointer-events-none opacity-20" style="background-image: url('https://placehold.co/1200x800/1e293b/FFFFFF?text=Simulated+Live+UNNES+Workshop')"></div>
+            <!-- Simulation Screen / Viewport -->
+            <div class="relative bg-slate-950 rounded-3xl overflow-hidden h-[450px] shadow-2xl border-4 border-slate-900 dark:border-[#10284F]">
+                
+                <!-- Simulated Live Camera Screen Overlay -->
+                <div class="absolute inset-0 bg-cover bg-center pointer-events-none opacity-20" style="background-image: url('https://placehold.co/1200x800/1e293b/FFFFFF?text=Simulated+Live+UNNES+Workshop')"></div>
 
-                    <!-- AR Overlay Indicators -->
-                    <div class="absolute inset-0 pointer-events-none flex flex-col justify-between p-6 z-10">
-                        <div class="flex justify-between items-start">
-                            <div class="bg-black/75 backdrop-blur-md px-3 py-2 rounded-xl border border-white/20 text-white">
-                                <span class="text-[10px] uppercase font-black tracking-wider text-[#00C2FF] animate-pulse"><i class="fa-solid fa-camera mr-1"></i> AR Mode Active</span>
-                                <h3 id="ar-active-name" class="text-xs font-bold">Mesin Bubut Utama (Lathe Machine)</h3>
-                            </div>
-                            <div class="bg-black/75 backdrop-blur-md p-2 rounded-xl border border-white/20 text-white flex items-center space-x-2 text-[10px] tech-font">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                                <span>FPS: 60 • LENS: WIDE AR-0.5x</span>
-                            </div>
+                <!-- AR Overlay Indicators -->
+                <div class="absolute inset-0 pointer-events-none flex flex-col justify-between p-6 z-10">
+                    <div class="flex justify-between items-start">
+                        <div class="bg-black/75 backdrop-blur-md px-3 py-2 rounded-xl border border-white/20 text-white">
+                            <span class="text-[10px] uppercase font-black tracking-wider text-[#00C2FF] animate-pulse"><i class="fa-solid fa-camera mr-1"></i> AR Mode Active</span>
+                            <h3 id="ar-active-name" class="text-xs font-bold">Mesin Bubut Utama (Lathe Machine)</h3>
                         </div>
-
-                        <!-- Center Scanning reticle -->
-                        <div class="self-center flex items-center justify-center">
-                            <div class="w-40 h-40 border-2 border-dashed border-[#00C2FF]/60 rounded-full animate-spin-slow"></div>
-                        </div>
-
-                        <!-- Bottom AR Labels Info Dynamic -->
-                        <div class="bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-white max-w-lg">
-                            <h4 class="text-xs font-bold text-[#00C2FF]" id="ar-comp-label">Bagian Aktif: Motor Transmisi & Spindle</h4>
-                            <p class="text-[11px] text-slate-300 mt-1 leading-relaxed" id="ar-comp-desc">Sistem transmisi roda gigi utama yang bertugas mengubah tingkat kecepatan rotasi spindle utama menyesuaikan diameter pemotongan benda kerja.</p>
+                        <div class="bg-black/75 backdrop-blur-md p-2 rounded-xl border border-white/20 text-white flex items-center space-x-2 text-[10px] tech-font">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <span>FPS: 60 • LENS: WIDE AR-0.5x</span>
                         </div>
                     </div>
 
-                    <!-- ACTUAL THREE.JS CANVAS CONTAINER -->
-                    <div id="ar-canvas-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+                    <!-- Center Scanning reticle -->
+                    <div class="self-center flex items-center justify-center">
+                        <div class="w-40 h-40 border-2 border-dashed border-[#00C2FF]/60 rounded-full animate-spin-slow"></div>
+                    </div>
+
+                    <!-- Bottom AR Labels Info Dynamic -->
+                    <div class="bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-white max-w-lg">
+                        <h4 class="text-xs font-bold text-[#00C2FF]" id="ar-comp-label">Bagian Aktif: Motor Transmisi & Spindle</h4>
+                        <p class="text-[11px] text-slate-300 mt-1 leading-relaxed" id="ar-comp-desc">Sistem transmisi roda gigi utama yang bertugas mengubah tingkat kecepatan rotasi spindle utama menyesuaikan diameter pemotongan benda kerja.</p>
+                    </div>
                 </div>
 
-                <!-- Interactive AR Controls Bar -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                    <button onclick="triggerARAction('rotate')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
-                        <i class="fa-solid fa-arrows-spin text-[#00C2FF]"></i>
-                        <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Auto Rotate</span>
-                    </button>
-                    <button onclick="triggerARAction('zoom')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
-                        <i class="fa-solid fa-magnifying-glass-plus text-[#00C2FF]"></i>
-                        <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Reset View</span>
-                    </button>
-                    <button id="btn-exploded" onclick="triggerARAction('exploded')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
-                        <i class="fa-solid fa-cubes-stacked text-orange-400"></i>
-                        <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Exploded View</span>
-                    </button>
-                    <button id="btn-section" onclick="triggerARAction('section')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
-                        <i class="fa-solid fa-scissors text-purple-400"></i>
-                        <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Section View</span>
-                    </button>
-                    <button onclick="triggerARAction('simulate')" class="col-span-2 md:col-span-1 flex items-center justify-center space-x-2 bg-gradient-to-r from-[#00C2FF] to-blue-500 hover:opacity-90 text-white p-3 rounded-xl shadow-lg transition-all duration-200">
-                        <i class="fa-solid fa-play"></i>
-                        <span class="text-xs font-black uppercase">Run Engine</span>
-                    </button>
-                </div>
-            </section>
+                <!-- ACTUAL THREE.JS CANVAS CONTAINER -->
+                <div id="ar-canvas-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+            </div>
+
+            <!-- Interactive AR Controls Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <button onclick="triggerARAction('rotate')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
+                    <i class="fa-solid fa-arrows-spin text-[#00C2FF]"></i>
+                    <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Auto Rotate</span>
+                </button>
+                <button onclick="triggerARAction('zoom')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
+                    <i class="fa-solid fa-magnifying-glass-plus text-[#00C2FF]"></i>
+                    <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Reset View</span>
+                </button>
+                <button id="btn-exploded" onclick="triggerARAction('exploded')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
+                    <i class="fa-solid fa-cubes-stacked text-orange-400"></i>
+                    <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Exploded View</span>
+                </button>
+                <button id="btn-section" onclick="triggerARAction('section')" class="flex items-center justify-center space-x-2 bg-white dark:bg-[#10284F] hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-900 p-3 rounded-xl transition-all duration-200">
+                    <i class="fa-solid fa-scissors text-purple-400"></i>
+                    <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Section View</span>
+                </button>
+                <button onclick="triggerARAction('simulate')" class="col-span-2 md:col-span-1 flex items-center justify-center space-x-2 bg-gradient-to-r from-[#00C2FF] to-blue-500 hover:opacity-90 text-white p-3 rounded-xl shadow-lg transition-all duration-200">
+                    <i class="fa-solid fa-play"></i>
+                    <span class="text-xs font-black uppercase">Run Engine</span>
+                </button>
+            </div>
+        </section>
 
             <!-- AI TUTOR VIEW -->
             <section id="view-ai-tutor" class="view-panel hidden flex flex-col gap-6">
@@ -1277,105 +1278,155 @@
             <section id="view-assessment" class="view-panel hidden flex flex-col gap-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Marcha Assess Adaptive Assessment</h2>
-                        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Uji kemampuan rotasi spasial kognitif Anda secara langsung melalui skenario ujian adaptif AI.</p>
+                        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Marcha Assess: Uji Kesiapan Praktikum</h2>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Pilih materi/jobsheet yang ingin diuji. Marcha AI akan menganalisis kesiapanmu sebelum turun ke bengkel secara nyata.</p>
                     </div>
                     <span class="bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-xs font-extrabold px-3 py-2 rounded-full border border-purple-200 dark:border-purple-900">
                         Skor Spasial Cindy: 82 (Intermediate)
                     </span>
                 </div>
 
-                <!-- Quiz Main Section -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="assess-dashboard">
-                    <!-- Left: Current Question Area -->
+                <!-- ===== STEP 1: PILIH MATERI ===== -->
+                <div id="ma-topic-select" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div onclick="selectAssessmentTopic('bubut_dasar')" class="cursor-pointer group bg-white dark:bg-[#10284F] hover:bg-blue-50/70 dark:hover:bg-blue-900/15 p-5 rounded-2xl border border-blue-200 dark:border-blue-900 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-blue-400">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-white mb-3 shadow"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Pemesinan Bubut Dasar</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">Sesuai Jobsheet TM-BKT-01: facing, turning, chamfer, parting, chuck & tailstock.</p>
+                        <p class="text-[10px] text-blue-500 font-bold mt-3">12 soal · ±12 menit</p>
+                    </div>
+                    <div onclick="selectAssessmentTopic('gambar_teknik')" class="cursor-pointer group bg-white dark:bg-[#10284F] hover:bg-purple-50/70 dark:hover:bg-purple-900/15 p-5 rounded-2xl border border-blue-200 dark:border-blue-900 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-purple-400">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-purple-500 to-indigo-400 flex items-center justify-center text-white mb-3 shadow"><i class="fa-solid fa-cube"></i></div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Gambar Teknik & Proyeksi</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">Rotasi spasial 3D, proyeksi orthographic kuadran I & III, dan irisan/section view.</p>
+                        <p class="text-[10px] text-purple-500 font-bold mt-3">12 soal · ±12 menit</p>
+                    </div>
+                    <div onclick="selectAssessmentTopic('k3_bengkel')" class="cursor-pointer group bg-white dark:bg-[#10284F] hover:bg-rose-50/70 dark:hover:bg-rose-900/15 p-5 rounded-2xl border border-blue-200 dark:border-blue-900 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-rose-400">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-rose-500 to-orange-400 flex items-center justify-center text-white mb-3 shadow"><i class="fa-solid fa-helmet-safety"></i></div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">K3 & Keselamatan Bengkel</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">APD, prosedur darurat, dan potensi bahaya saat mengoperasikan mesin bubut.</p>
+                        <p class="text-[10px] text-rose-500 font-bold mt-3">12 soal · ±12 menit</p>
+                    </div>
+                    <div onclick="selectAssessmentTopic('parameter_cnc')" class="cursor-pointer group bg-white dark:bg-[#10284F] hover:bg-amber-50/70 dark:hover:bg-amber-900/15 p-5 rounded-2xl border border-blue-200 dark:border-blue-900 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-amber-400">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-white mb-3 shadow"><i class="fa-solid fa-calculator"></i></div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Parameter Pemesinan & CNC</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">Perhitungan RPM, cutting speed, dan setting titik nol benda kerja (G54) pada CNC.</p>
+                        <p class="text-[10px] text-amber-500 font-bold mt-3">12 soal · ±12 menit</p>
+                    </div>
+                </div>
+
+                <!-- ===== STEP 2: QUIZ ===== -->
+                <div id="ma-quiz-wrapper" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 bg-white dark:bg-[#10284F] p-6 rounded-3xl border border-blue-200 dark:border-blue-900 shadow-sm flex flex-col justify-between min-h-[400px]">
                         <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <button onclick="backToTopicSelect()" class="text-[10px] font-black text-slate-500 dark:text-slate-300 hover:text-blue-500 flex items-center gap-1"><i class="fa-solid fa-arrow-left"></i> Ganti Materi</button>
+                                <span class="text-xs font-black text-amber-600 dark:text-amber-400 tech-font" id="ma-timer">12:00</span>
+                            </div>
+                            <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-1.5 rounded-full overflow-hidden mb-4">
+                                <div id="ma-progress-bar" class="bg-gradient-to-r from-purple-400 to-blue-500 h-full rounded-full transition-all duration-500" style="width: 8%"></div>
+                            </div>
                             <div class="flex justify-between items-center mb-4 text-xs font-bold text-slate-600 dark:text-slate-300">
-                                <span class="uppercase tracking-wider">Soal 3 dari 10 (Mental Rotation)</span>
-                                <span class="bg-yellow-100 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-400 px-2 py-1 rounded font-black">Medium</span>
+                                <span class="uppercase tracking-wider">Soal <span id="ma-q-num">1</span> dari <span id="ma-q-total">12</span></span>
+                                <span id="ma-q-category" class="bg-yellow-100 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-400 px-2 py-1 rounded font-black">Teori Dasar</span>
                             </div>
 
-                            <p class="text-sm font-black text-slate-900 dark:text-white mb-6 leading-relaxed">Jika komponen Spindle Chuck ini dirotasikan sejauh 180 derajat pada sumbu Z, manakah orientasi pandangan kanan (right projection view) yang paling akurat?</p>
-
-                            <!-- Question Image/Mesh simulation representation -->
-                            <div class="aspect-video w-full max-w-sm mx-auto bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-2xl border border-blue-200 dark:border-blue-900 flex items-center justify-center relative shadow-inner p-4">
-                                <div class="text-center">
-                                    <i class="fa-solid fa-cube text-6xl text-[#4DA6FF]/60 animate-spin-slow"></i>
-                                    <p class="text-[10px] text-slate-600 dark:text-slate-300 font-extrabold mt-3 uppercase tracking-wider">Simulasi Rotasi Sumbu Z</p>
-                                </div>
-                            </div>
+                            <p class="text-sm font-black text-slate-900 dark:text-white mb-6 leading-relaxed" id="ma-q-text">Memuat soal...</p>
                         </div>
 
-                        <!-- Answer choices selaras Pre-Test & Latihan -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
-                            <button onclick="submitAssessmentAnswer(true)" class="p-3.5 bg-slate-50 dark:bg-[#0B1E3D] hover:bg-blue-50 dark:hover:bg-blue-900/30 text-left rounded-xl border border-blue-200 dark:border-blue-900 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 transition-colors">
-                                <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-black text-[10px] shrink-0">A</span>
-                                <span class="leading-relaxed">Tiga rahang cekam bertukar posisi simetris atas-bawah</span>
-                            </button>
-                            <button onclick="submitAssessmentAnswer(false)" class="p-3.5 bg-slate-50 dark:bg-[#0B1E3D] hover:bg-blue-50 dark:hover:bg-blue-900/30 text-left rounded-xl border border-blue-200 dark:border-blue-900 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 transition-colors">
-                                <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-black text-[10px] shrink-0">B</span>
-                                <span class="leading-relaxed">Penampang lingkaran bergeser radial 90 derajat</span>
-                            </button>
-                            <button onclick="submitAssessmentAnswer(false)" class="p-3.5 bg-slate-50 dark:bg-[#0B1E3D] hover:bg-blue-50 dark:hover:bg-blue-900/30 text-left rounded-xl border border-blue-200 dark:border-blue-900 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 transition-colors">
-                                <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-black text-[10px] shrink-0">C</span>
-                                <span class="leading-relaxed">Sudut kemiringan tool post searah sumbu utama mesin</span>
-                            </button>
-                            <button onclick="submitAssessmentAnswer(false)" class="p-3.5 bg-slate-50 dark:bg-[#0B1E3D] hover:bg-blue-50 dark:hover:bg-blue-900/30 text-left rounded-xl border border-blue-200 dark:border-blue-900 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 transition-colors">
-                                <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-black text-[10px] shrink-0">D</span>
-                                <span class="leading-relaxed">Lubang pasak berputar sejajar sumbu silinder horizontal</span>
-                            </button>
-                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6" id="ma-choices"></div>
+                        <button onclick="nextAssessmentQuestion()" id="ma-btn-next" class="hidden self-end mt-4 bg-blue-500 hover:bg-blue-600 text-white text-xs font-black px-5 py-2.5 rounded-xl shadow-sm">Soal Berikutnya →</button>
                     </div>
 
-                    <!-- Right Panel: Adaptive Marcha Diagnostics Outcome -->
-                    <div class="bg-white dark:bg-[#10284F] p-6 rounded-3xl border border-blue-200 dark:border-blue-900 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center space-x-2 mb-4">
-                                <i class="fa-solid fa-chart-line text-purple-600 dark:text-purple-400"></i>
-                                <h3 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Analisis Profil Spasial AI</h3>
-                            </div>
+                    <div class="bg-white dark:bg-[#10284F] p-6 rounded-3xl border border-blue-200 dark:border-blue-900 shadow-sm">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <i class="fa-solid fa-clipboard-check text-purple-600 dark:text-purple-400"></i>
+                            <h3 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Komponen Penilaian</h3>
+                        </div>
+                        <div class="space-y-3 text-xs font-bold text-slate-700 dark:text-slate-300">
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5FAFF] dark:bg-[#0B1E3D]"><i class="fa-solid fa-book text-blue-500 w-4"></i> Teori Dasar</div>
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5FAFF] dark:bg-[#0B1E3D]"><i class="fa-solid fa-list-check text-emerald-500 w-4"></i> Prosedur Praktikum</div>
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5FAFF] dark:bg-[#0B1E3D]"><i class="fa-solid fa-helmet-safety text-rose-500 w-4"></i> K3 & Keselamatan</div>
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5FAFF] dark:bg-[#0B1E3D]"><i class="fa-solid fa-calculator text-amber-500 w-4"></i> Kalkulasi Parameter</div>
+                        </div>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-4 leading-relaxed"><i class="fa-solid fa-circle-info mr-1"></i>Tidak ada penalti jawaban salah. Jawab sejujur-jujurnya agar hasil analisis kesiapan praktikummu akurat.</p>
+                    </div>
+                </div>
 
-                            <!-- Ability stats represented with nice design and percentages -->
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
-                                        <span>Rotasi Mental Objek 3D</span>
-                                        <span>85%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                                        <div class="bg-purple-500 h-full rounded-full" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
-                                        <span>Interpretasi Orthographic</span>
-                                        <span>70%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                                        <div class="bg-blue-500 h-full rounded-full" style="width: 70%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
-                                        <span>Perspektif Irisan (Sections)</span>
-                                        <span>90%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                                        <div class="bg-emerald-500 h-full rounded-full" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- ===== STEP 3: HASIL ANALISIS ===== -->
+                <div id="ma-result" class="hidden flex flex-col gap-6">
+                    <div class="bg-white dark:bg-[#10284F] p-6 md:p-8 rounded-3xl border border-blue-200 dark:border-blue-900 shadow-sm">
+                        <div class="text-center mb-6">
+                            <div id="ma-result-icon" class="w-20 h-20 mx-auto rounded-3xl flex items-center justify-center text-white text-3xl shadow-lg mb-4"></div>
+                            <h3 class="text-xl font-black text-slate-900 dark:text-white" id="ma-result-title">Hasil Analisis Kesiapan Praktikum</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-2" id="ma-result-topic-label"></p>
+                        </div>
 
-                            <!-- Diagnostic Text Advice by AI -->
-                            <div class="mt-6 bg-[#F5FAFF] dark:bg-[#0B1E3D] p-3.5 rounded-xl border border-blue-200 dark:border-blue-900/60 text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-semibold">
-                                <strong><i class="fa-solid fa-magic-wand-sparkles text-purple-600 mr-1"></i> Rekomendasi Diagnosis AI:</strong> Pemahaman Irisan Isometrik Anda sudah sangat kuat (90%). Namun, tingkat ketelitian visualisasi proyeksi Orthographic Anda butuh dilatih guna menghindari kesalahan seting manual tool post.
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                            <div class="bg-[#F5FAFF] dark:bg-[#0B1E3D] p-4 rounded-2xl text-center border border-blue-100 dark:border-blue-900/40">
+                                <p class="text-2xl font-black text-blue-500 tech-font" id="ma-score-display">0</p>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Skor Keseluruhan</p>
+                            </div>
+                            <div class="bg-[#F5FAFF] dark:bg-[#0B1E3D] p-4 rounded-2xl text-center border border-blue-100 dark:border-blue-900/40">
+                                <p class="text-2xl font-black text-emerald-500 tech-font" id="ma-correct-count">0/12</p>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Jawaban Benar</p>
+                            </div>
+                            <div class="bg-[#F5FAFF] dark:bg-[#0B1E3D] p-4 rounded-2xl text-center border border-blue-100 dark:border-blue-900/40 col-span-2 md:col-span-1">
+                                <p class="text-lg font-black text-purple-500 tech-font" id="ma-status-display">-</p>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Status Kesiapan</p>
+                            </div>
+                            <div class="bg-[#F5FAFF] dark:bg-[#0B1E3D] p-4 rounded-2xl text-center border border-blue-100 dark:border-blue-900/40 col-span-2 md:col-span-1">
+                                <p class="text-lg font-black text-amber-500 tech-font" id="ma-weakest-display">-</p>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Area Paling Lemah</p>
                             </div>
                         </div>
 
-                        <!-- Button to update learning journey -->
-                        <button onclick="runAiDiagnosticFeedback()" class="w-full mt-6 bg-[#4DA6FF] hover:bg-blue-500 text-white text-xs font-black py-3 px-4 rounded-xl shadow uppercase tracking-wider">
-                            Generate New Learning Path
-                        </button>
+                        <!-- Per-category readiness bars -->
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
+                                    <span><i class="fa-solid fa-book text-blue-500 mr-1"></i>Teori Dasar</span><span id="ma-bar-teori">-</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2.5 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                                    <div class="bg-blue-500 h-full rounded-full transition-all duration-700" id="ma-bar-teori-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
+                                    <span><i class="fa-solid fa-list-check text-emerald-500 mr-1"></i>Prosedur Praktikum</span><span id="ma-bar-prosedur">-</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2.5 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                                    <div class="bg-emerald-500 h-full rounded-full transition-all duration-700" id="ma-bar-prosedur-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
+                                    <span><i class="fa-solid fa-helmet-safety text-rose-500 mr-1"></i>K3 & Keselamatan</span><span id="ma-bar-k3">-</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2.5 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                                    <div class="bg-rose-500 h-full rounded-full transition-all duration-700" id="ma-bar-k3-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center text-xs mb-1.5 font-bold text-slate-700 dark:text-slate-300">
+                                    <span><i class="fa-solid fa-calculator text-amber-500 mr-1"></i>Kalkulasi Parameter</span><span id="ma-bar-kalkulasi">-</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-[#0B1E3D] h-2.5 rounded-full overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                                    <div class="bg-amber-500 h-full rounded-full transition-all duration-700" id="ma-bar-kalkulasi-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed AI Recommendation -->
+                        <div id="ma-recommendation" class="p-5 rounded-2xl border text-xs font-medium leading-relaxed space-y-3"></div>
+
+                        <div class="flex flex-col md:flex-row gap-3 mt-6">
+                            <button onclick="backToTopicSelect()" class="flex-1 bg-[#4DA6FF] hover:bg-blue-500 text-white text-xs font-black py-3 px-4 rounded-xl shadow uppercase tracking-wider">
+                                Uji Materi Lain
+                            </button>
+                            <button onclick="retryAssessmentTopic()" class="flex-1 bg-slate-100 dark:bg-[#0B1E3D] hover:bg-slate-200 dark:hover:bg-blue-900/30 text-slate-800 dark:text-slate-200 text-xs font-black py-3 px-4 rounded-xl border border-blue-200 dark:border-blue-900 uppercase tracking-wider">
+                                Ulangi Tes Ini
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1398,7 +1449,7 @@
                                 <h1 class="text-2xl font-extrabold mt-2">Cindy Nor Afita Sari</h1>
                                 <p class="text-blue-100 text-xs font-semibold mt-1">
                                     <i class="fa-solid fa-id-card mr-1"></i> 5202421023 &nbsp;·&nbsp;
-                                    <i class="fa-solid fa-graduation-cap mr-1"></i> PVTM UNNES — Angkatan 2021
+                                    <i class="fa-solid fa-graduation-cap mr-1"></i> PVTM UNNES — Angkatan 2025
                                 </p>
                             </div>
                         </div>
@@ -1469,7 +1520,7 @@
                                 </div>
                                 <div class="flex items-center gap-3 p-2.5 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-100 dark:border-blue-900/40">
                                     <i class="fa-solid fa-calendar-days text-blue-400 w-4 text-center shrink-0"></i>
-                                    <div><p class="text-[10px] text-slate-500 dark:text-slate-400">Angkatan / Semester</p><p class="font-bold text-slate-900 dark:text-white">2021 / Semester 6</p></div>
+                                    <div><p class="text-[10px] text-slate-500 dark:text-slate-400">Angkatan / Semester</p><p class="font-bold text-slate-900 dark:text-white">2025 / Semester 2</p></div>
                                 </div>
                                 <div class="flex items-center gap-3 p-2.5 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-100 dark:border-blue-900/40">
                                     <i class="fa-solid fa-chalkboard-user text-blue-400 w-4 text-center shrink-0"></i>
@@ -1671,10 +1722,9 @@
             <section id="view-jobsheet" class="view-panel hidden flex flex-col gap-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Smart Jobsheet: Pemesinan Bubut Dasar</h2>
-                        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Panduan praktikum terintegrasi dengan penjelas jargon AI dan visualisasi simulasi real-time.</p>
+                        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Smart Jobsheet: Pemesinan Bubut & Evaluasi AI+AR</h2>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Buka tugas rancangan Dosen, bubut komponen riil, dan foto hasilnya bersama model AR untuk penilaian akurasi otomatis!</p>
                     </div>
-                    <!-- Helper Action Button AI -->
                     <div class="flex space-x-2">
                         <button onclick="simplifyJobsheet()" class="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-900 text-blue-600 dark:text-[#3E8BFF] px-3.5 py-2 rounded-xl text-xs font-black hover:opacity-95 flex items-center space-x-1.5 shadow-sm">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -1683,70 +1733,173 @@
                     </div>
                 </div>
 
+                <!-- Assigned Workpiece Targets (2D / 3D / AR) Card -->
+                <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-5 rounded-3xl border border-blue-300/40 dark:border-blue-900">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                        <div>
+                            <span class="bg-blue-500 text-white text-[9px] font-black uppercase px-2 py-1 rounded-md tracking-wider">Tugas Aktif Dari: Septian Eko Candra, S.Pd., M.T.</span>
+                            <h3 class="text-base font-extrabold mt-1 text-slate-900 dark:text-white" id="assigned-task-title">Poros Bertingkat Silindris (TM-BKT-02)</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-300">Batas Toleransi Deviasi: <span class="font-extrabold text-blue-600 dark:text-[#00D4FF]">± 0.05 mm</span></p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="toggleVisualMode('2d')" id="btn-view-2d" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow">2D Blueprint</button>
+                            <button onclick="toggleVisualMode('3d')" id="btn-view-3d" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-[#10284F] text-slate-700 dark:text-slate-200 border border-blue-200 dark:border-blue-900">3D Interactive</button>
+                            <button onclick="toggleVisualMode('ar')" id="btn-view-ar" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-[#10284F] text-slate-700 dark:text-slate-200 border border-blue-200 dark:border-blue-900">AR Blueprint</button>
+                        </div>
+                    </div>
+
+                    <!-- Visual Area for Assigned Workpiece -->
+                    <div class="relative bg-slate-900 rounded-2xl h-64 overflow-hidden flex items-center justify-center border border-slate-800 dark:border-[#10284F]">
+                        <!-- 2D View -->
+                        <div id="target-view-2d" class="absolute inset-0 flex flex-col justify-center items-center p-4 bg-white dark:bg-[#0B1E3D] text-slate-800 dark:text-slate-100">
+                            <div class="w-full max-w-md border-2 border-dashed border-blue-400 p-4 rounded-xl flex flex-col items-center justify-center bg-blue-50/20">
+                                <i class="fa-solid fa-drafting-compass text-4xl text-blue-500 mb-2"></i>
+                                <span class="font-mono text-[10px] text-slate-800 dark:text-slate-200 text-center leading-relaxed">
+                                    <strong>BLUEPRINT PROYEKSI AMERIKA</strong><br>
+                                    Step 1: Ø 25.00mm x 40.00mm | Step 2: Ø 18.00mm x 30.00mm<br>
+                                    Chamfer: 1.50mm x 45°
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 3D View -->
+                        <div id="target-view-3d" class="absolute inset-0 hidden flex justify-center items-center bg-slate-950">
+                            <div class="text-center text-white pointer-events-none z-10">
+                                <p class="text-xs font-bold text-slate-200">3D Target Component Mesh</p>
+                                <p class="text-[10px] text-slate-400">Seret mouse di area viewport untuk memutar model target</p>
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fa-solid fa-cube text-6xl text-cyan-400/30 animate-pulse"></i>
+                            </div>
+                        </div>
+
+                        <!-- AR View -->
+                        <div id="target-view-ar" class="absolute inset-0 hidden flex flex-col justify-center items-center bg-slate-950 p-4">
+                            <div class="absolute inset-0 bg-cover bg-center opacity-40 filter blur-sm" style="background-image: url('https://placehold.co/1200x800/1e293b/FFFFFF?text=Ar-Overlay-Preview')"></div>
+                            <div class="relative z-10 text-center text-white p-4 bg-black/60 rounded-xl max-w-sm border border-white/10">
+                                <i class="fa-solid fa-cube text-3xl text-emerald-400 mb-2"></i>
+                                <h4 class="text-xs font-bold">Model AR Siap Diproyeksikan</h4>
+                                <p class="text-[10px] text-slate-300 mt-1 leading-relaxed">Gunakan kamera smartphone atau upload foto fisik Anda di bawah ini bersama target holografis silindris.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Jobsheet Workspace Split Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Steps & Requirements Left/Center -->
+                    <!-- Left/Center: Steps & Upload Section -->
                     <div class="lg:col-span-2 bg-white dark:bg-[#10284F] p-6 rounded-3xl border border-blue-200 dark:border-blue-900 shadow-sm space-y-6">
-                        <!-- Header Jobsheet specs -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pb-4 border-b border-blue-100 dark:border-blue-900 text-xs font-bold text-slate-700 dark:text-slate-300">
-                            <div>
-                                <span class="text-slate-500 dark:text-slate-300 font-semibold block mb-0.5">Kode Jobsheet</span>
-                                <p class="text-slate-900 dark:text-white text-xs">TM-BKT-02</p>
-                            </div>
-                            <div>
-                                <span class="text-slate-500 dark:text-slate-300 font-semibold block mb-0.5">Durasi Kerja</span>
-                                <p class="text-slate-900 dark:text-white text-xs">180 Menit</p>
-                            </div>
-                            <div>
-                                <span class="text-slate-500 dark:text-slate-300 font-semibold block mb-0.5">Alat Utama</span>
-                                <p class="text-slate-900 dark:text-white text-xs">Bubut Konvensional</p>
-                            </div>
-                            <div>
-                                <span class="text-slate-500 dark:text-slate-300 font-semibold block mb-0.5">Benda Target</span>
-                                <p class="text-slate-900 dark:text-white text-xs">Poros Bertingkat</p>
-                            </div>
-                        </div>
-
-                        <!-- Objective & Materials -->
-                        <div class="space-y-2">
-                            <h4 class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">I. Kompetensi Praktikum</h4>
-                            <p class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-semibold" id="jobsheet-tujuan">Mahasiswa vokasional UNNES harus menguasai penyusunan seting pahat lurus, pembubutan rata muka (facing), serta pembubutan poros bertingkat linear dengan batas toleransi penyimpangan maksimal 0.05 mm.</p>
-                        </div>
-
-                        <!-- Step Work list -->
                         <div class="space-y-3">
-                            <h4 class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">II. Urutan Langkah Kerja</h4>
+                            <h4 class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">Langkah Praktik Bengkel & Penyerahan Hasil</h4>
                             <div class="space-y-3" id="jobsheet-steps-container">
-                                <!-- Step 1 -->
                                 <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
                                     <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">1</span>
                                     <div class="text-xs space-y-1">
-                                        <h5 class="font-extrabold text-slate-900 dark:text-white">Gunakan Alat Pelindung Diri (K3)</h5>
-                                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Pakai kacamata safety untuk perlindungan dari serpihan gram logam panas, lalu aktifkan MCB panel kelistrikan utama.</p>
+                                        <h5 class="font-extrabold text-slate-900 dark:text-white">Pencekaman & Penyetelan Mesin Fisik</h5>
+                                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Pasang benda kerja silinder logam aluminium pada cekam rahang tiga (chuck) di bengkel UNNES secara senter.</p>
                                     </div>
                                 </div>
-                                <!-- Step 2 -->
                                 <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
                                     <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">2</span>
                                     <div class="text-xs space-y-1">
-                                        <h5 class="font-extrabold text-slate-900 dark:text-white">Penyelarasan Ketinggian Pahat (Toolpost Alignment)</h5>
-                                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Letakkan pahat bubut rata kanan pada tool post, atur pelat pengganjal setinggi senter putar kepala lepas.</p>
+                                        <h5 class="font-extrabold text-slate-900 dark:text-white">Penyayatan Bertingkat Linear</h5>
+                                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Lakukan pembubutan facing dan bubut bertingkat memanjang sesuai spesifikasi gambar teknik di atas.</p>
                                     </div>
                                 </div>
-                                <!-- Step 3 -->
                                 <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
                                     <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">3</span>
                                     <div class="text-xs space-y-1">
-                                        <h5 class="font-extrabold text-slate-900 dark:text-white">Pencekaman Benda Kerja Silindris</h5>
-                                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Jepit material logam ke rahang chuck menggunakan kunci pas khusus secara senter presisi agar putaran stabil.</p>
+                                        <h5 class="font-extrabold text-slate-900 dark:text-white">Pemindaian Komparatif AR (Kirim ke Marcha)</h5>
+                                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Letakkan komponen hasil bubutan fisik Anda, bidik foto bersama cetak hologram AR, lalu unggah fotonya di bawah untuk dinilai oleh AI.</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Upload and AI Analysis Segment -->
+                        <div class="p-5 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-[#0B1E3D] dark:to-[#10284F] rounded-2xl border border-blue-200 dark:border-blue-900/60 space-y-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-camera-retro text-xl text-blue-500"></i>
+                                <h4 class="text-xs font-black uppercase text-slate-900 dark:text-white">Zona Evaluasi Kamera / Unggah Foto Hasil Bubut Riil</h4>
+                            </div>
+
+                            <!-- Photo / Target AR Simulator container -->
+                            <div class="relative aspect-video w-full max-w-lg mx-auto bg-slate-950 rounded-xl overflow-hidden border-2 border-dashed border-blue-400 flex items-center justify-center">
+                                <img id="uploaded-workpiece-preview" src="https://placehold.co/600x400/1e293b/FFFFFF?text=Posisikan+Benda+Kerja+Anda+Di+Sini" class="w-full h-full object-cover opacity-70" alt="Workpiece Preview">
+
+                                <div id="ar-blueprint-overlay" class="absolute inset-0 pointer-events-none border-4 border-emerald-400/40 bg-emerald-400/5 flex items-center justify-center">
+                                    <div class="border-2 border-emerald-400/50 rounded-lg p-2 bg-emerald-950/80 text-[8px] font-mono text-emerald-400 tracking-wider text-center pulse-active">
+                                        <i class="fa-solid fa-cube mr-1"></i> AR REF OVERLAY: G54 TURNING TARGET
+                                    </div>
+                                    <div class="absolute left-0 w-full h-[2px] bg-emerald-400/60 shadow-[0_0_8px_#34d399] scan-line"></div>
+                                </div>
+                            </div>
+
+                            <!-- Presets untuk demo cepat -->
+                            <div class="space-y-1.5">
+                                <p class="text-[10px] font-bold text-slate-500 dark:text-slate-300">Gunakan Foto Contoh Praktik (Untuk Demo Cepat):</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="loadMockWorkpiece('presisi')" class="px-2.5 py-1.5 rounded-lg text-[10px] font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-300">Hasil Bubut Sangat Presisi</button>
+                                    <button onclick="loadMockWorkpiece('cacat-dimensi')" class="px-2.5 py-1.5 rounded-lg text-[10px] font-extrabold bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border border-amber-300">Cacat Dimensi (Lebih Tebal)</button>
+                                    <button onclick="loadMockWorkpiece('kasar')" class="px-2.5 py-1.5 rounded-lg text-[10px] font-extrabold bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 border border-red-300">Permukaan Kasar (Pahat Tumpul)</button>
+                                </div>
+                            </div>
+
+                            <!-- Upload Inputs -->
+                            <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                                <label class="flex-1 bg-white dark:bg-[#10284F] hover:bg-slate-150 dark:hover:bg-slate-900 border border-blue-200 dark:border-blue-900 text-slate-800 dark:text-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-center cursor-pointer transition">
+                                    <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Pilih Foto Hasil Pemesinan Fisik
+                                    <input type="file" id="physical-photo-input" accept="image/*" onchange="handleFileSelected(event)" class="hidden">
+                                </label>
+                                <button id="btn-start-analysis" onclick="runArVisionAnalysis()" class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:opacity-90 text-white font-black px-6 py-3 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-md">
+                                    <i class="fa-solid fa-microscope"></i>
+                                    <span>MULAI ANALISIS KOMPARASI AI</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- AI Comparative Diagnostic Result -->
+                        <div id="ai-inspection-results" class="hidden p-5 bg-white dark:bg-[#0B1E3D] rounded-2xl border-2 border-emerald-400 space-y-4">
+                            <div class="flex justify-between items-center pb-3 border-b border-blue-100 dark:border-blue-900/50">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-circle-check text-xl text-emerald-500"></i>
+                                    <h4 class="text-xs font-black uppercase text-slate-950 dark:text-white">Laporan Pemindaian Visual AI + AR Marcha</h4>
+                                </div>
+                                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-black px-2.5 py-1 rounded" id="inspect-score-badge">Match: 96%</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="p-3 bg-slate-50 dark:bg-[#10284F] rounded-lg border border-blue-100 dark:border-blue-900/50">
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-black">Akurasi Dimensi</p>
+                                    <p class="text-lg font-black text-slate-850 dark:text-white" id="inspect-dimension-stat">96% Presisi</p>
+                                    <p class="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold mt-1">Masuk batas toleransi ±0.05mm</p>
+                                </div>
+                                <div class="p-3 bg-slate-50 dark:bg-[#10284F] rounded-lg border border-blue-100 dark:border-blue-900/50">
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-black">Kehalusan Permukaan</p>
+                                    <p class="text-lg font-black text-slate-850 dark:text-white" id="inspect-finish-stat">Ra 1.6 μm (Halus)</p>
+                                    <p class="text-[9px] text-slate-500 dark:text-slate-400 mt-1">Laju pemakanan stabil</p>
+                                </div>
+                                <div class="p-3 bg-slate-50 dark:bg-[#10284F] rounded-lg border border-blue-100 dark:border-blue-900/50">
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-black">K3 & Prosedur</p>
+                                    <p class="text-lg font-black text-emerald-600 dark:text-emerald-400" id="inspect-safety-stat">LULUS</p>
+                                    <p class="text-[9px] text-slate-500 dark:text-slate-400 mt-1">APD terverifikasi lengkap</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/30 text-xs space-y-2">
+                                <p class="font-extrabold text-emerald-800 dark:text-emerald-300 flex items-center">
+                                    <i class="fa-solid fa-wand-magic-sparkles mr-1 text-purple-500"></i>
+                                    <span>Umpan Balik Perbaikan Mesin (AI Advice):</span>
+                                </p>
+                                <p class="text-slate-800 dark:text-slate-200 leading-relaxed font-semibold" id="inspect-feedback-text">
+                                    Kerja luar biasa, Cindy! Hasil bubutan Anda menunjukkan kesesuaian dimensi yang luar biasa.
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right sidebar Jargon Translator & Visual-AR checklist -->
+                    <!-- Right sidebar Jargon Translator & Video Panduan -->
                     <div class="space-y-6">
-                        <!-- AI Jargon Translator Helper Card -->
                         <div class="bg-gradient-to-br from-indigo-500/15 to-[#00C2FF]/10 p-5 rounded-3xl border border-blue-200 dark:border-blue-900 text-xs">
                             <div class="flex items-center space-x-2 mb-3">
                                 <i class="fa-solid fa-wand-magic-sparkles text-purple-600 dark:text-purple-400"></i>
@@ -1767,13 +1920,9 @@
                                     <i class="fa-solid fa-circle-question text-blue-500"></i>
                                 </button>
                             </div>
-                            <!-- Live answer display box -->
-                            <div id="jargon-answer-box" class="hidden mt-3 p-3 bg-white dark:bg-[#10284F] rounded-lg border border-blue-300 dark:border-blue-900 text-[11px] text-slate-800 dark:text-slate-200 font-semibold leading-relaxed">
-                                <!-- Populated dynamically -->
-                            </div>
+                            <div id="jargon-answer-box" class="hidden mt-3 p-3 bg-white dark:bg-[#10284F] rounded-lg border border-blue-300 dark:border-blue-900 text-[11px] text-slate-800 dark:text-slate-200 font-semibold leading-relaxed"></div>
                         </div>
 
-                        <!-- AR Companion App Scan checklist -->
                         <div class="bg-white dark:bg-[#10284F] p-5 rounded-3xl border border-blue-200 dark:border-blue-900 shadow-sm text-xs">
                             <h3 class="font-bold text-slate-900 dark:text-white mb-3"><i class="fa-solid fa-video text-rose-500 mr-1"></i> Video Panduan Praktikum</h3>
                             <div class="aspect-video bg-slate-100 dark:bg-[#0B1E3D] rounded-xl flex items-center justify-center text-slate-400 relative overflow-hidden">
@@ -2334,6 +2483,12 @@
         let voiceChatActive = false;
         let pretestScore = 0;
         let latihanScore = 0;
+        let uploadedPhotoBase64 = "";
+        const mockPictures = {
+            'presisi': 'https://placehold.co/600x400/22c55e/ffffff?text=Poros+Silindris+Bertingkat+Presisi',
+            'cacat-dimensi': 'https://placehold.co/600x400/eab308/ffffff?text=Logam+Cacat+Bahu+Diameter+Lebih+Tebal',
+            'kasar': 'https://placehold.co/600x400/ef4444/ffffff?text=Silinder+Logam+Kasar+Alur+Bilah'
+        };
 
         // ThreeJS variables
         let scene, camera, renderer, mainComponentGroup;
@@ -2354,6 +2509,7 @@
         // Start the application after everything has finished loading
         window.onload = function() {
             initThreeJS();
+            changeArObject();
             generateDesktopSidebarNav();
             navigateTo('home');
             showQuickAlert("Sistem siap! Anda masuk sebagai Cindy Nor Afita Sari (UNNES).");
@@ -2739,6 +2895,211 @@
                 showQuickAlert("Jawaban Benar! Anda berhasil memahami konsep spasial rotasi proyeksi!");
             } else {
                 showQuickAlert("Jawaban Kurang Tepat. Pelajari kembali materi Proyeksi Orthographic.");
+            }
+        }
+
+        // ThreeJS variables (pastikan ini sudah dideklarasikan di bagian atas script, dekat let currentTheme dsb)
+        // let scene, camera, renderer, mainComponentGroup;
+        // let workpieceCylinder, cuttingTool;
+
+        // Initialize 3D component renderer
+        function initThreeJS() {
+            const container = document.getElementById('ar-canvas-container');
+            if(!container) return;
+
+            container.innerHTML = '';
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a1e3d);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 3, 7);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0x4da6ff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0x00c2ff, 1, 10);
+            pointLight.position.set(-2, 1, 2);
+            scene.add(pointLight);
+
+            mainComponentGroup = new THREE.Group();
+            create3DLatheMachineModel();
+            scene.add(mainComponentGroup);
+
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            container.addEventListener('mousedown', (e) => { isDragging = true; });
+            container.addEventListener('mousemove', (e) => {
+                const deltaMove = {
+                    x: e.offsetX - previousMousePosition.x,
+                    y: e.offsetY - previousMousePosition.y
+                };
+                if (isDragging) {
+                    mainComponentGroup.rotation.y += deltaMove.x * 0.005;
+                    mainComponentGroup.rotation.x += deltaMove.y * 0.005;
+                }
+                previousMousePosition = { x: e.offsetX, y: e.offsetY };
+            });
+            window.addEventListener('mouseup', () => { isDragging = false; });
+
+            window.addEventListener('resize', () => {
+                if (!container || !camera || !renderer) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            animate();
+        }
+
+        // Procedural Lathe Machine Generation using primitives
+        function create3DLatheMachineModel() {
+            const bedGeo = new THREE.BoxGeometry(4, 0.4, 1.2);
+            const bedMat = new THREE.MeshStandardMaterial({ color: 0x3a4f6e, roughness: 0.5 });
+            const bedMesh = new THREE.Mesh(bedGeo, bedMat);
+            bedMesh.position.y = -0.5;
+            mainComponentGroup.add(bedMesh);
+
+            const headstockGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+            const headstockMat = new THREE.MeshStandardMaterial({ color: 0x1d3a5e, metalness: 0.8, roughness: 0.2 });
+            const headstockMesh = new THREE.Mesh(headstockGeo, headstockMat);
+            headstockMesh.position.set(-1.4, 0.3, 0);
+            headstockMesh.name = "headstock";
+            mainComponentGroup.add(headstockMesh);
+
+            const chuckGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.4, 16);
+            const chuckMat = new THREE.MeshStandardMaterial({ color: 0x8fa3b0, metalness: 0.9, roughness: 0.1 });
+            const chuckMesh = new THREE.Mesh(chuckGeo, chuckMat);
+            chuckMesh.rotation.z = Math.PI / 2;
+            chuckMesh.position.set(-0.6, 0.3, 0);
+            chuckMesh.name = "chuck";
+            mainComponentGroup.add(chuckMesh);
+
+            const jawGeo = new THREE.BoxGeometry(0.15, 0.3, 0.15);
+            const jawMat = new THREE.MeshStandardMaterial({ color: 0x4f5e6b, metalness: 0.9 });
+            const jaw1 = new THREE.Mesh(jawGeo, jawMat);
+            jaw1.position.set(-0.6, 0.7, 0);
+            jaw1.name = "jaw1";
+            mainComponentGroup.add(jaw1);
+
+            const tailstockGeo = new THREE.BoxGeometry(0.8, 1.0, 0.8);
+            const tailstockMat = new THREE.MeshStandardMaterial({ color: 0x244061, metalness: 0.7 });
+            const tailstockMesh = new THREE.Mesh(tailstockGeo, tailstockMat);
+            tailstockMesh.position.set(1.4, 0.2, 0);
+            tailstockMesh.name = "tailstock";
+            mainComponentGroup.add(tailstockMesh);
+
+            const toolpostGeo = new THREE.BoxGeometry(0.6, 0.8, 0.6);
+            const toolpostMat = new THREE.MeshStandardMaterial({ color: 0x9faebc, metalness: 0.8 });
+            const toolpostMesh = new THREE.Mesh(toolpostGeo, toolpostMat);
+            toolpostMesh.position.set(0.2, 0.1, 0);
+            toolpostMesh.name = "toolpost";
+            mainComponentGroup.add(toolpostMesh);
+
+            const cutterGeo = new THREE.BoxGeometry(0.1, 0.15, 0.3);
+            const cutterMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.2 });
+            const cutterMesh = new THREE.Mesh(cutterGeo, cutterMat);
+            cutterMesh.position.set(0.2, 0.45, 0.15);
+            cutterMesh.name = "cutter";
+            mainComponentGroup.add(cutterMesh);
+
+            const workGeo = new THREE.CylinderGeometry(0.25, 0.25, 1.6, 16);
+            const workMat = new THREE.MeshStandardMaterial({ color: 0xc9d6df, metalness: 0.8 });
+            workpieceCylinder = new THREE.Mesh(workGeo, workMat);
+            workpieceCylinder.rotation.z = Math.PI / 2;
+            workpieceCylinder.position.set(0.4, 0.3, 0);
+            workpieceCylinder.name = "workpiece";
+            mainComponentGroup.add(workpieceCylinder);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (rotateMode && mainComponentGroup) {
+                mainComponentGroup.rotation.y += 0.005;
+            }
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+
+        // AR simulation buttons logic
+        function triggerARAction(action) {
+            const btnExploded = document.getElementById('btn-exploded');
+            const btnSection = document.getElementById('btn-section');
+
+            if (action === 'rotate') {
+                rotateMode = !rotateMode;
+                showQuickAlert(rotateMode ? "Auto-rotasi AR aktif." : "Auto-rotasi dinonaktifkan.");
+            } else if (action === 'zoom') {
+                camera.position.set(0, 3, 7);
+                camera.lookAt(0, 0, 0);
+                mainComponentGroup.rotation.set(0, 0, 0);
+                showQuickAlert("Posisi zoom kamera direset.");
+            } else if (action === 'exploded') {
+                explodedMode = !explodedMode;
+                mainComponentGroup.children.forEach(child => {
+                    if (explodedMode) {
+                        if (child.name === 'headstock') child.position.x -= 0.6;
+                        if (child.name === 'tailstock') child.position.x += 0.6;
+                        if (child.name === 'toolpost') child.position.z += 0.4;
+                        if (child.name === 'cutter') child.position.z += 0.5;
+                        if (child.name === 'chuck') child.position.x -= 0.3;
+                    } else {
+                        if (child.name === 'headstock') child.position.x = -1.4;
+                        if (child.name === 'tailstock') child.position.x = 1.4;
+                        if (child.name === 'toolpost') child.position.z = 0;
+                        if (child.name === 'cutter') child.position.z = 0.15;
+                        if (child.name === 'chuck') child.position.x = -0.6;
+                    }
+                });
+
+                if (btnExploded) {
+                    if (explodedMode) {
+                        btnExploded.classList.add('bg-orange-500', 'text-white');
+                        showQuickAlert("Tampilan komponen urai (Exploded View) AKTIF.");
+                    } else {
+                        btnExploded.classList.remove('bg-orange-500', 'text-white');
+                        showQuickAlert("Tampilan direset ke normal.");
+                    }
+                }
+            } else if (action === 'section') {
+                sectionMode = !sectionMode;
+                mainComponentGroup.children.forEach(child => {
+                    if (sectionMode) {
+                        if (child.name === 'workpiece') child.scale.set(0.5, 1, 1);
+                    } else {
+                        if (child.name === 'workpiece') child.scale.set(1, 1, 1);
+                    }
+                });
+
+                if (btnSection) {
+                    if (sectionMode) {
+                        btnSection.classList.add('bg-purple-500', 'text-white');
+                        showQuickAlert("Tampilan Potongan X-Ray (Section View) AKTIF.");
+                    } else {
+                        btnSection.classList.remove('bg-purple-500', 'text-white');
+                        showQuickAlert("Section View dinonaktifkan.");
+                    }
+                }
+            } else if (action === 'simulate') {
+                showQuickAlert("Menjalankan simulasi parameter perputaran logam...");
+                let speed = 0;
+                let interval = setInterval(() => {
+                    if (workpieceCylinder) {
+                        workpieceCylinder.rotation.x += 0.5;
+                    }
+                    speed++;
+                    if (speed > 50) clearInterval(interval);
+                }, 30);
             }
         }
 
@@ -3469,73 +3830,448 @@
             }
         }
 
-        // Submit assessment answers
-        function submitAssessmentAnswer(isCorrect) {
+        // ========== MARCHA ASSESS (SMART ASSESSMENT) ==========
+        // Setiap topik berisi 12 soal: 3 Teori Dasar, 3 Prosedur Praktikum, 3 K3 & Keselamatan, 3 Kalkulasi Parameter
+        // Soal disusun selaras dengan Jobsheet TM-BKT-01 (Pemesinan Bubut Dasar) dan modul yang sudah dapat diakses mahasiswa.
+        const assessmentTopics = {
+            bubut_dasar: {
+                label: 'Pemesinan Bubut Dasar (Jobsheet TM-BKT-01)',
+                questions: [
+                    { cat: 'teori', text: 'Apa fungsi utama Tailstock (kepala lepas) pada mesin bubut?', choices: ['Menopang benda kerja panjang agar tidak melengkung saat dibubut', 'Mencekam benda kerja secara konsentris', 'Mengatur kecepatan putaran spindle utama', 'Menggerakkan eretan memanjang secara otomatis'], correct: 0 },
+                    { cat: 'teori', text: 'Cekam (chuck) 3 rahang paling cocok digunakan untuk mencekam benda kerja berbentuk...', choices: ['Asimetris dan tidak beraturan', 'Silindris karena dapat memusatkan benda kerja secara otomatis', 'Pelat tipis berbentuk persegi', 'Material yang sangat panjang tanpa penopang'], correct: 1 },
+                    { cat: 'teori', text: 'Fungsi utama Tool Post pada mesin bubut adalah...', choices: ['Menjaga kestabilan motor spindle', 'Sebagai dudukan pahat yang dapat digeser melintang/sejajar sumbu spindle', 'Mengukur diameter benda kerja', 'Menyaring serpihan gram logam'], correct: 1 },
+                    { cat: 'prosedur', text: 'Sebelum mesin bubut dinyalakan, hal pertama yang wajib diperiksa adalah...', choices: ['Kecepatan maksimum mesin', 'Pencekaman benda kerja pada chuck sudah kencang dan senter', 'Warna cat bodi mesin', 'Jumlah jam operasional mesin'], correct: 1 },
+                    { cat: 'prosedur', text: 'Pada operasi Facing, arah penyayatan pahat dilakukan untuk...', choices: ['Mereduksi diameter luar material sepanjang sumbu X', 'Meratakan permukaan depan (ujung) material logam', 'Memotong putus material dari sisa cekam', 'Menumpulkan pinggiran tajam material'], correct: 1 },
+                    { cat: 'prosedur', text: 'Pada operasi Chamfering, tool post umumnya dimiringkan sebesar...', choices: ['15 derajat', '30 derajat', '45 derajat', '60 derajat'], correct: 2 },
+                    { cat: 'prosedur', text: 'Operasi Parting menggunakan pahat berbentuk khusus untuk tujuan...', choices: ['Meratakan permukaan depan benda kerja', 'Memotong putus sisa poros benda kerja dari cekam', 'Membuat ulir pada permukaan luar', 'Membuat lubang senter pada ujung material'], correct: 1 },
+                    { cat: 'prosedur', text: 'Sebelum menyentuh permukaan logam dengan pahat, ujung pahat harus disejajarkan dengan...', choices: ['Garis senter kepala lepas (tailstock)', 'Tepi atas bed mesin', 'Sudut ruangan bengkel', 'Posisi lampu kerja'], correct: 0 },
+                    { cat: 'k3', text: 'Sebelum mulai praktik bubut, urutan yang benar adalah...', choices: ['Aktifkan MCB lalu pakai APD', 'Pakai APD (goggles, wearpack, safety shoes) lalu aktifkan MCB panel kelistrikan', 'Langsung cekam benda kerja tanpa APD', 'Nyalakan mesin lalu pasang goggles'], correct: 1 },
+                    { cat: 'k3', text: 'Apa fungsi utama kacamata safety (goggles) saat membubut?', choices: ['Memperjelas penglihatan dalam ruangan gelap', 'Melindungi mata dari serpihan gram logam panas', 'Mengurangi suara bising mesin', 'Menahan keringat agar tidak menetes'], correct: 1 },
+                    { cat: 'k3', text: 'Jika tangan terasa dekat dengan bagian chuck yang sedang berputar, tindakan yang benar adalah...', choices: ['Tetap melanjutkan agar pekerjaan cepat selesai', 'Segera menjauhkan tangan dan menjaga jarak aman dari bagian berputar', 'Menyentuh chuck untuk memastikan kecepatannya', 'Mengabaikannya karena sudah terbiasa'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Berdasarkan Jobsheet TM-BKT-01, batas toleransi penyimpangan maksimal pembubutan poros bertingkat linear adalah...', choices: ['0.5 mm', '0.05 mm', '5 mm', '0.005 mm'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Jika Cutting Speed (Cs) dibuat tetap namun diameter benda kerja (d) diperbesar, maka RPM (n) yang dibutuhkan akan...', choices: ['Meningkat', 'Menurun', 'Tetap sama', 'Menjadi nol'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Untuk material Aluminium Al6061 (Cs = 120 m/menit) dengan diameter benda kerja 50 mm, RPM yang mendekati hasil perhitungan n = (1000×Cs)/(π×d) adalah...', choices: ['± 240 RPM', '± 480 RPM', '± 764 RPM', '± 1200 RPM'], correct: 2 }
+                ]
+            },
+            gambar_teknik: {
+                label: 'Gambar Teknik & Proyeksi Orthographic',
+                questions: [
+                    { cat: 'teori', text: 'Pada proyeksi kuadran I (sistem Eropa), pandangan benda diletakkan...', choices: ['Searah arah pandang', 'Berlawanan arah pandang', 'Selalu di tengah kertas gambar', 'Tidak memiliki aturan peletakan'], correct: 1 },
+                    { cat: 'teori', text: 'Sistem proyeksi kuadran III (Amerika) dianggap lebih intuitif karena...', choices: ['Pandangan diletakkan berlawanan arah pandang', 'Pandangan diletakkan searah arah pandang, sehingga lebih mudah dibayangkan', 'Tidak memerlukan pandangan atas', 'Hanya digunakan untuk benda simetris'], correct: 1 },
+                    { cat: 'teori', text: 'Sebuah kubus diputar 90° searah jarum jam (dilihat dari atas). Sisi yang sebelumnya berada di kiri kini menghadap ke arah...', choices: ['Belakang pengamat', 'Depan pengamat', 'Atas', 'Bawah'], correct: 1 },
+                    { cat: 'prosedur', text: 'Pada proyeksi orthographic kuadran III (Amerika), pandangan atas suatu benda diletakkan di mana terhadap pandangan depan?', choices: ['Di bawah pandangan depan', 'Di atas pandangan depan', 'Di sebelah kiri pandangan depan', 'Di sebelah kanan pandangan depan'], correct: 1 },
+                    { cat: 'prosedur', text: 'Section view (pandangan irisan) pada gambar teknik digunakan untuk...', choices: ['Mempercantik tampilan gambar', 'Menampilkan detail bagian dalam komponen yang tidak terlihat dari luar', 'Mengganti pandangan depan sepenuhnya', 'Menunjukkan warna asli material'], correct: 1 },
+                    { cat: 'prosedur', text: 'Sebelum mengerjakan benda kerja sesuai jobsheet/gambar teknik, langkah pertama yang harus dilakukan adalah...', choices: ['Langsung menyalakan mesin', 'Membaca dan memahami seluruh dimensi serta toleransi pada gambar', 'Menebak ukuran berdasarkan pengalaman', 'Meminjam alat ukur tanpa membaca gambar'], correct: 1 },
+                    { cat: 'k3', text: 'Kesalahan dalam membaca simbol proyeksi kuadran Eropa vs Amerika pada jobsheet dapat memicu...', choices: ['Hasil pengerjaan yang justru lebih presisi', 'Fatal error pengerjaan bahan logam karena dimensi terbalik/salah', 'Tidak berdampak apapun pada hasil', 'Mesin otomatis akan mengoreksi sendiri'], correct: 1 },
+                    { cat: 'k3', text: 'Mengapa kemampuan membaca gambar teknik berkaitan erat dengan keselamatan kerja di bengkel?', choices: ['Karena tidak ada hubungannya sama sekali', 'Kesalahan interpretasi gambar dapat menyebabkan setting alat yang salah dan membahayakan operator', 'Karena gambar teknik hanya untuk dokumentasi administratif', 'Karena operator tidak perlu membaca gambar saat mesin otomatis'], correct: 1 },
+                    { cat: 'k3', text: 'Jika ragu menafsirkan simbol toleransi pada jobsheet, tindakan paling tepat adalah...', choices: ['Menebak sendiri agar pekerjaan cepat selesai', 'Berkonsultasi dengan dosen/instruktur sebelum mengerjakan benda kerja', 'Mengabaikan toleransi tersebut', 'Mengganti jobsheet dengan versi lain'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Jika pandangan depan sebuah benda berupa lingkaran penuh berdiameter 40 mm, maka lebar pandangan sampingnya (berbentuk persegi panjang) adalah...', choices: ['20 mm', '40 mm', '80 mm', 'Tidak dapat ditentukan'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Sebuah gambar digambar dengan skala 1:2. Jika panjang pada kertas gambar terukur 30 mm, maka panjang benda asli adalah...', choices: ['15 mm', '30 mm', '60 mm', '90 mm'], correct: 2 },
+                    { cat: 'kalkulasi', text: 'Pada jobsheet tertulis dimensi Ø50 ± 0.05 mm. Diameter maksimum yang masih dapat diterima adalah...', choices: ['49.95 mm', '50.00 mm', '50.05 mm', '50.50 mm'], correct: 2 }
+                ]
+            },
+            k3_bengkel: {
+                label: 'K3 & Keselamatan Kerja Bengkel',
+                questions: [
+                    { cat: 'teori', text: 'K3 dalam konteks bengkel pemesinan merupakan singkatan dari...', choices: ['Kesehatan dan Keselamatan Kerja', 'Komponen Kerja Konstruksi', 'Kalibrasi Komponen Kerja', 'Ketentuan Kerja Khusus'], correct: 0 },
+                    { cat: 'teori', text: 'Tujuan utama penerapan K3 di bengkel pemesinan adalah...', choices: ['Mempercepat target produksi semata', 'Mencegah kecelakaan kerja dan menjaga kesehatan operator', 'Mengurangi jumlah mahasiswa praktik', 'Menghemat biaya perawatan mesin'], correct: 1 },
+                    { cat: 'teori', text: 'Sumber bahaya utama saat mengoperasikan mesin bubut antara lain...', choices: ['Wifi yang lambat di bengkel', 'Gram logam panas, bagian mesin yang berputar, dan kebisingan', 'Cuaca di luar bengkel', 'Warna seragam praktikum'], correct: 1 },
+                    { cat: 'prosedur', text: 'Urutan persiapan K3 yang benar sebelum mengoperasikan mesin bubut adalah...', choices: ['Aktifkan MCB terlebih dahulu, baru memakai APD', 'Kenakan APD lengkap (goggles, wearpack, safety shoes), baru aktifkan MCB panel kelistrikan', 'Langsung mencekam benda kerja tanpa memakai APD', 'Memakai APD hanya jika diawasi dosen'], correct: 1 },
+                    { cat: 'prosedur', text: 'Jika terjadi kondisi darurat seperti korsleting listrik saat mesin menyala, langkah pertama yang harus dilakukan adalah...', choices: ['Mematikan power/MCB utama dengan tenang lalu menjauh', 'Mencoba memperbaiki kabel sendiri saat mesin masih menyala', 'Berteriak lalu meninggalkan bengkel tanpa mematikan mesin', 'Menunggu instruksi tanpa melakukan apapun'], correct: 0 },
+                    { cat: 'prosedur', text: 'Sebelum meninggalkan area mesin bubut setelah praktik selesai, operator wajib...', choices: ['Membiarkan mesin tetap menyala untuk sesi berikutnya', 'Mematikan mesin sepenuhnya dan merapikan area kerja', 'Melepas seluruh APD sebelum mesin benar-benar berhenti', 'Meninggalkan gram logam berserakan di lantai'], correct: 1 },
+                    { cat: 'k3', text: 'Fungsi utama goggles (kacamata safety) saat membubut adalah...', choices: ['Melindungi mata dari percikan/serpihan gram logam panas', 'Mempercantik penampilan saat praktik', 'Mengurangi suara bising mesin', 'Mengukur kecepatan putaran spindle'], correct: 0 },
+                    { cat: 'k3', text: 'Fungsi utama wearpack (pakaian bengkel) adalah...', choices: ['Melindungi tubuh dari gram panas dan risiko terlilit bagian berputar', 'Sebagai identitas kelas saja', 'Menjaga suhu tubuh tetap dingin', 'Mengganti fungsi sarung tangan'], correct: 0 },
+                    { cat: 'k3', text: 'Fungsi utama safety shoes (sepatu baja) di bengkel pemesinan adalah...', choices: ['Melindungi kaki dari benda jatuh atau benda tajam', 'Membuat operator berjalan lebih cepat', 'Menambah tinggi badan operator', 'Hanya bersifat formalitas berpakaian'], correct: 0 },
+                    { cat: 'kalkulasi', text: 'Saat chuck sedang berputar pada kecepatan kerja, jarak tangan operator terhadap bagian yang berputar seharusnya...', choices: ['Sedekat mungkin agar lebih presisi', 'Dijaga pada jarak aman, tangan tidak boleh menyentuh bagian yang berputar', 'Tidak ada batasan tertentu', 'Hanya perlu dijaga jika RPM di atas 2000'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Jika RPM mesin dinaikkan tanpa pengamanan dan prosedur K3 yang sesuai, maka risiko kecelakaan kerja akan...', choices: ['Menurun secara otomatis', 'Meningkat', 'Tidak berubah sama sekali', 'Hilang sepenuhnya'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Goggles (kacamata safety) boleh dilepas oleh operator pada kondisi...', choices: ['Kapan saja jika merasa gerah', 'Tidak boleh dilepas selama mesin bubut dalam keadaan menyala/beroperasi', 'Setelah 5 menit pertama mesin menyala', 'Saat hanya mengamati tanpa menyentuh mesin'], correct: 1 }
+                ]
+            },
+            parameter_cnc: {
+                label: 'Parameter Pemesinan & CNC Dasar',
+                questions: [
+                    { cat: 'teori', text: 'Rumus untuk menghitung RPM (n) mesin bubut yang benar adalah...', choices: ['n = (1000 × Cs) / (π × d)', 'n = (π × d) / (1000 × Cs)', 'n = Cs × d × π', 'n = 1000 / (Cs + d)'], correct: 0 },
+                    { cat: 'teori', text: 'Pada mesin CNC, register G54 digunakan untuk...', choices: ['Mengatur kecepatan spindle maksimum', 'Menyimpan koordinat titik nol (titik referensi) benda kerja', 'Menyalakan coolant secara otomatis', 'Mengganti pahat secara manual'], correct: 1 },
+                    { cat: 'teori', text: 'Cutting Speed (Cs) dalam permesinan menyatakan...', choices: ['Kecepatan potong material dalam satuan m/menit', 'Jumlah putaran spindle per detik', 'Diameter maksimum benda kerja', 'Jarak antara pahat dan tailstock'], correct: 0 },
+                    { cat: 'prosedur', text: 'Langkah pertama dalam setting titik nol benda kerja (G54) pada mesin bubut CNC adalah...', choices: ['Menyentuhkan pahat ke diameter terluar silinder material dan mencatat posisi X', 'Langsung menjalankan program CNC tanpa referensi', 'Mengukur panjang benda kerja dengan jangka sorong saja', 'Mematikan mesin CNC terlebih dahulu'], correct: 0 },
+                    { cat: 'prosedur', text: 'Setelah posisi X dicatat, langkah berikutnya dalam setting titik nol adalah...', choices: ['Menyentuhkan pahat ke sisi muka (facing) dan menginput nilai Z sebagai referensi Z0', 'Mengganti pahat dengan ukuran berbeda', 'Mengulang penyentuhan posisi X sebanyak 5 kali', 'Menyalakan coolant terlebih dahulu'], correct: 0 },
+                    { cat: 'prosedur', text: 'Koordinat hasil setting titik nol benda kerja pada CNC disimpan pada register memori...', choices: ['M03–M05', 'G00–G01', 'G54–G59', 'T01–T04'], correct: 2 },
+                    { cat: 'k3', text: 'Sebelum menjalankan program CNC untuk pertama kalinya, operator sebaiknya...', choices: ['Langsung menjalankan program pada benda kerja sebenarnya', 'Melakukan simulasi/dry run tanpa benda kerja untuk memastikan jalur pahat aman', 'Mengabaikan simulasi karena memakan waktu', 'Menjalankan dengan kecepatan maksimum sejak awal'], correct: 1 },
+                    { cat: 'k3', text: 'Risiko utama jika nilai koordinat X/Z yang diinput pada G54 salah adalah...', choices: ['Tidak ada risiko karena CNC otomatis aman', 'Pahat dapat bertabrakan dengan benda kerja atau chuck sehingga berbahaya', 'Mesin akan berhenti otomatis tanpa kerusakan', 'Hasil benda kerja akan tetap presisi'], correct: 1 },
+                    { cat: 'k3', text: 'Meskipun mesin CNC bekerja secara otomatis, APD yang tetap wajib dikenakan operator adalah...', choices: ['Tidak perlu APD karena sudah otomatis', 'Goggles dan wearpack tetap wajib dikenakan', 'Hanya sarung tangan tebal', 'Helm proyek konstruksi'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Untuk material Aluminium Al6061 (Cs = 120 m/menit) dengan diameter 50 mm, RPM yang mendekati hasil perhitungan adalah...', choices: ['± 240 RPM', '± 480 RPM', '± 764 RPM', '± 1500 RPM'], correct: 2 },
+                    { cat: 'kalkulasi', text: 'Untuk material baja St37 (Cs = 30 m/menit) dengan diameter 20 mm, RPM yang mendekati hasil perhitungan n = (1000×Cs)/(π×d) adalah...', choices: ['± 130 RPM', '± 477 RPM', '± 950 RPM', '± 1200 RPM'], correct: 1 },
+                    { cat: 'kalkulasi', text: 'Jika diameter benda kerja (d) diperbesar menjadi 2 kali lipat dengan Cs tetap, maka RPM (n) yang dibutuhkan akan menjadi...', choices: ['2 kali lebih besar', 'Setengah dari nilai semula', 'Tetap sama', '4 kali lebih besar'], correct: 1 }
+                ]
+            }
+        };
+
+        const categoryMeta = {
+            teori: { label: 'Teori Dasar', barId: 'ma-bar-teori' },
+            prosedur: { label: 'Prosedur Praktikum', barId: 'ma-bar-prosedur' },
+            k3: { label: 'K3 & Keselamatan', barId: 'ma-bar-k3' },
+            kalkulasi: { label: 'Kalkulasi Parameter', barId: 'ma-bar-kalkulasi' }
+        };
+
+        let maCurrentTopic = null;
+        let maQuestions = [];
+        let maCurrentQ = 0;
+        let maAnswers = [];
+        let maTimerInterval = null;
+        let maTimeLeft = 720; // 12 minutes
+
+        function shuffleArray(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function selectAssessmentTopic(topicKey) {
+            maCurrentTopic = topicKey;
+            maQuestions = shuffleArray(assessmentTopics[topicKey].questions);
+            maCurrentQ = 0;
+            maAnswers = [];
+            maTimeLeft = 720;
+
+            document.getElementById('ma-topic-select').classList.add('hidden');
+            document.getElementById('ma-result').classList.add('hidden');
+            document.getElementById('ma-quiz-wrapper').classList.remove('hidden');
+            document.getElementById('ma-q-total').innerText = maQuestions.length;
+
+            renderAssessmentQuestion();
+            startAssessmentTimer();
+        }
+
+        function retryAssessmentTopic() {
+            if (maCurrentTopic) selectAssessmentTopic(maCurrentTopic);
+        }
+
+        function backToTopicSelect() {
+            clearInterval(maTimerInterval);
+            document.getElementById('ma-quiz-wrapper').classList.add('hidden');
+            document.getElementById('ma-result').classList.add('hidden');
+            document.getElementById('ma-topic-select').classList.remove('hidden');
+        }
+
+        function startAssessmentTimer() {
+            clearInterval(maTimerInterval);
+            maTimerInterval = setInterval(() => {
+                maTimeLeft--;
+                const min = Math.floor(maTimeLeft / 60).toString().padStart(2, '0');
+                const sec = (maTimeLeft % 60).toString().padStart(2, '0');
+                const timerEl = document.getElementById('ma-timer');
+                if (timerEl) timerEl.innerText = min + ':' + sec;
+                if (maTimeLeft <= 0) {
+                    clearInterval(maTimerInterval);
+                    finishAssessment();
+                }
+            }, 1000);
+        }
+
+        function renderAssessmentQuestion() {
+            const q = maQuestions[maCurrentQ];
+            document.getElementById('ma-q-num').innerText = maCurrentQ + 1;
+            document.getElementById('ma-q-category').innerText = categoryMeta[q.cat].label;
+            document.getElementById('ma-q-text').innerText = q.text;
+            document.getElementById('ma-progress-bar').style.width = ((maCurrentQ + 1) / maQuestions.length * 100) + '%';
+            document.getElementById('ma-btn-next').classList.add('hidden');
+
+            const letters = ['A', 'B', 'C', 'D'];
+            const choicesEl = document.getElementById('ma-choices');
+            choicesEl.innerHTML = q.choices.map((c, i) =>
+                `<button onclick="chooseAssessmentAnswer(this, ${i === q.correct}, '${q.cat}')" class="ma-choice p-3.5 bg-slate-50 dark:bg-[#0B1E3D] hover:bg-blue-50 dark:hover:bg-blue-900/30 text-left rounded-xl border border-blue-200 dark:border-blue-900 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 transition-colors">
+                    <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-black text-[10px] shrink-0">${letters[i]}</span>
+                    <span class="leading-relaxed">${c}</span>
+                </button>`
+            ).join('');
+        }
+
+        function chooseAssessmentAnswer(btn, isCorrect, cat) {
+            document.querySelectorAll('.ma-choice').forEach(b => b.disabled = true);
             if (isCorrect) {
-                showQuickAlert("Sangat Bagus! Jawaban Anda Benar. Algoritma AI akan meningkatkan bobot kesulitan kuis Anda berikutnya.");
+                btn.classList.add('!bg-emerald-100', 'dark:!bg-emerald-950/40', '!border-emerald-400');
             } else {
-                showQuickAlert("Kurang Tepat. AI merekomendasikan Anda untuk membuka kembali Modul Gambar Teknik.");
+                btn.classList.add('!bg-rose-100', 'dark:!bg-rose-950/40', '!border-rose-400');
+            }
+            maAnswers.push({ correct: isCorrect, cat: cat });
+            document.getElementById('ma-btn-next').classList.remove('hidden');
+        }
+
+        function nextAssessmentQuestion() {
+            maCurrentQ++;
+            if (maCurrentQ >= maQuestions.length) {
+                clearInterval(maTimerInterval);
+                finishAssessment();
+            } else {
+                renderAssessmentQuestion();
             }
         }
 
-        function runAiDiagnosticFeedback() {
-            showQuickAlert("AI Diagnostic sukses menganalisis kelemahan spasial kognitif Anda. Alur belajar adaptif berhasil diperbarui!");
+        function finishAssessment() {
+            document.getElementById('ma-quiz-wrapper').classList.add('hidden');
+            document.getElementById('ma-result').classList.remove('hidden');
+
+            const totalCorrect = maAnswers.filter(a => a.correct).length;
+            const score = Math.round((totalCorrect / maQuestions.length) * 100);
+
+            // Per-category scoring
+            const catScores = {};
+            Object.keys(categoryMeta).forEach(cat => {
+                const total = maAnswers.filter(a => a.cat === cat).length;
+                const correct = maAnswers.filter(a => a.cat === cat && a.correct).length;
+                const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+                catScores[cat] = { total, correct, pct };
+                document.getElementById(categoryMeta[cat].barId).innerText = total > 0 ? (pct + '%') : '-';
+            });
+
+            // K3 readiness is treated as a hard gate: practicum cannot be deemed "ready"
+            // if safety understanding is weak, regardless of overall score.
+            const k3Pct = catScores.k3.pct;
+            const prosedurPct = catScores.prosedur.pct;
+
+            let statusLabel, statusColor, iconClass, iconBg;
+            if (k3Pct < 60) {
+                statusLabel = 'Belum Siap Praktikum';
+                statusColor = 'rose';
+                iconClass = 'fa-triangle-exclamation';
+                iconBg = 'bg-gradient-to-br from-rose-500 to-red-600';
+            } else if (score >= 80 && prosedurPct >= 70) {
+                statusLabel = 'Siap Praktikum';
+                statusColor = 'emerald';
+                iconClass = 'fa-circle-check';
+                iconBg = 'bg-gradient-to-br from-emerald-400 to-green-600';
+            } else if (score >= 55) {
+                statusLabel = 'Siap dengan Pendampingan';
+                statusColor = 'amber';
+                iconClass = 'fa-user-shield';
+                iconBg = 'bg-gradient-to-br from-amber-400 to-orange-500';
+            } else {
+                statusLabel = 'Belum Siap Praktikum';
+                statusColor = 'rose';
+                iconClass = 'fa-triangle-exclamation';
+                iconBg = 'bg-gradient-to-br from-rose-500 to-red-600';
+            }
+
+            // Find weakest category among those actually tested
+            let weakestCat = null, weakestPct = 101;
+            Object.keys(catScores).forEach(cat => {
+                if (catScores[cat].total > 0 && catScores[cat].pct < weakestPct) {
+                    weakestPct = catScores[cat].pct;
+                    weakestCat = cat;
+                }
+            });
+
+            const iconEl = document.getElementById('ma-result-icon');
+            iconEl.className = `w-20 h-20 mx-auto rounded-3xl flex items-center justify-center text-white text-3xl shadow-lg mb-4 ${iconBg}`;
+            iconEl.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+            document.getElementById('ma-result-topic-label').innerText = `Materi diuji: ${assessmentTopics[maCurrentTopic].label}`;
+            document.getElementById('ma-score-display').innerText = score;
+            document.getElementById('ma-correct-count').innerText = `${totalCorrect}/${maQuestions.length}`;
+            document.getElementById('ma-status-display').innerText = statusLabel;
+            document.getElementById('ma-status-display').className = `text-lg font-black tech-font text-${statusColor}-500`;
+            document.getElementById('ma-weakest-display').innerText = weakestCat ? categoryMeta[weakestCat].label : '-';
+
+            setTimeout(() => {
+                Object.keys(categoryMeta).forEach(cat => {
+                    const fillEl = document.getElementById(categoryMeta[cat].barId + '-fill');
+                    if (fillEl) fillEl.style.width = catScores[cat].pct + '%';
+                });
+            }, 100);
+
+            // Build detailed, practicum-readiness-focused recommendation text
+            const recBox = document.getElementById('ma-recommendation');
+            const colorClasses = {
+                emerald: 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900 text-emerald-900 dark:text-emerald-200',
+                amber: 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900 text-amber-900 dark:text-amber-200',
+                rose: 'bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900 text-rose-900 dark:text-rose-200'
+            };
+            recBox.className = `p-5 rounded-2xl border text-xs font-medium leading-relaxed space-y-3 ${colorClasses[statusColor]}`;
+
+            let recHtml = `<p><strong><i class="fa-solid fa-magic-wand-sparkles mr-1"></i> Status: ${statusLabel}</strong></p>`;
+
+            if (k3Pct < 60 && catScores.k3.total > 0) {
+                recHtml += `<p><i class="fa-solid fa-helmet-safety mr-1"></i> Pemahaman K3 & Keselamatan kamu baru ${k3Pct}%, di bawah ambang batas aman (60%) untuk turun langsung ke bengkel. <strong>Kamu wajib mengulang materi K3 dan mendapat pendampingan dosen sebelum diizinkan praktik nyata</strong>, karena ini menyangkut keselamatan diri sendiri dan rekan praktik.</p>`;
+            }
+            if (catScores.prosedur.total > 0 && prosedurPct < 70) {
+                recHtml += `<p><i class="fa-solid fa-list-check mr-1"></i> Pemahaman prosedur/urutan langkah praktikum kamu sebesar ${prosedurPct}%. Pelajari kembali tahapan jobsheet (urutan facing → turning → chamfer → parting) agar pengerjaan di bengkel sesuai SOP dan tidak salah urutan.</p>`;
+            }
+            if (catScores.teori.total > 0) {
+                recHtml += `<p><i class="fa-solid fa-book mr-1"></i> Penguasaan teori dasar kamu berada di ${catScores.teori.pct}%. ${catScores.teori.pct >= 70 ? 'Sudah cukup kuat sebagai pondasi sebelum praktik.' : 'Disarankan membuka kembali Smart Jobsheet dan bertanya pada Marcha AI untuk memperkuat konsep dasar.'}</p>`;
+            }
+            if (catScores.kalkulasi.total > 0) {
+                recHtml += `<p><i class="fa-solid fa-calculator mr-1"></i> Kemampuan kalkulasi/parameter kamu di ${catScores.kalkulasi.pct}%. ${catScores.kalkulasi.pct >= 70 ? 'Kamu cukup mampu menentukan parameter pemesinan dengan tepat.' : 'Latih kembali perhitungan RPM dan toleransi dimensi agar tidak salah seting mesin saat praktik.'}</p>`;
+            }
+
+            if (statusLabel === 'Siap Praktikum') {
+                recHtml += `<p><i class="fa-solid fa-circle-check mr-1"></i> Secara keseluruhan kamu <strong>sudah memenuhi syarat kesiapan praktikum</strong> untuk materi "${assessmentTopics[maCurrentTopic].label}". Tetap terapkan SOP K3 secara konsisten saat berada di bengkel.</p>`;
+            } else if (statusLabel === 'Siap dengan Pendampingan') {
+                recHtml += `<p><i class="fa-solid fa-user-shield mr-1"></i> Kamu boleh mengikuti sesi praktikum, namun <strong>disarankan tetap didampingi dosen/instruktur</strong> pada bagian "${weakestCat ? categoryMeta[weakestCat].label : 'yang masih lemah'}" sampai pemahamanmu lebih stabil.</p>`;
+            } else {
+                recHtml += `<p><i class="fa-solid fa-triangle-exclamation mr-1"></i> Disarankan untuk <strong>tidak melanjutkan ke praktik nyata dahulu</strong>. Pelajari ulang materi melalui Smart Jobsheet dan modul terkait, lalu ulangi tes ini sebelum dijadwalkan ke bengkel.</p>`;
+            }
+
+            recBox.innerHTML = recHtml;
         }
 
+        function toggleVisualMode(mode) {
+    const container2d = document.getElementById('target-view-2d');
+    const container3d = document.getElementById('target-view-3d');
+    const containerAr = document.getElementById('target-view-ar');
+
+    const btn2d = document.getElementById('btn-view-2d');
+    const btn3d = document.getElementById('btn-view-3d');
+    const btnAr = document.getElementById('btn-view-ar');
+
+    [btn2d, btn3d, btnAr].forEach(btn => {
+        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-[#10284F] text-slate-700 dark:text-slate-200 border border-blue-200 dark:border-blue-900";
+    });
+
+    container2d.classList.add('hidden');
+    container3d.classList.add('hidden');
+    containerAr.classList.add('hidden');
+
+    if (mode === '2d') {
+        container2d.classList.remove('hidden');
+        btn2d.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
+    } else if (mode === '3d') {
+        container3d.classList.remove('hidden');
+        btn3d.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
+    } else if (mode === 'ar') {
+        containerAr.classList.remove('hidden');
+        btnAr.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
+    }
+}
+
+function loadMockWorkpiece(type) {
+    const preview = document.getElementById('uploaded-workpiece-preview');
+    if (preview) {
+        preview.src = mockPictures[type];
+        uploadedPhotoBase64 = mockPictures[type];
+        showQuickAlert(`Berhasil memuat foto simulasi: ${type === 'presisi' ? 'Benda presisi' : type === 'cacat-dimensi' ? 'Tebal melenceng' : 'Permukaan kasar'}. Siap dianalisis!`);
+    }
+}
+
+function handleFileSelected(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('uploaded-workpiece-preview');
+            if (preview) {
+                preview.src = e.target.result;
+                uploadedPhotoBase64 = e.target.result.split(',')[1];
+                showQuickAlert("Foto hasil pengerjaan fisik Anda berhasil diunggah! Tekan tombol 'MULAI ANALISIS KOMPARASI AI'.");
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function runArVisionAnalysis() {
+    const resultsPanel = document.getElementById('ai-inspection-results');
+    const scoreBadge = document.getElementById('inspect-score-badge');
+    const dimStat = document.getElementById('inspect-dimension-stat');
+    const finishStat = document.getElementById('inspect-finish-stat');
+    const safetyStat = document.getElementById('inspect-safety-stat');
+    const feedbackText = document.getElementById('inspect-feedback-text');
+    const startBtn = document.getElementById('btn-start-analysis');
+
+    startBtn.disabled = true;
+    startBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Menganalisis Spasial...</span>`;
+    showQuickAlert("Marcha AI sedang membandingkan kontur foto fisik Anda dengan koordinat 3D AR...");
+
+    let targetPreset = "presisi";
+    const previewSrc = document.getElementById('uploaded-workpiece-preview').src;
+    if (previewSrc.includes("Lebih+Tebal")) {
+        targetPreset = "cacat-dimensi";
+    } else if (previewSrc.includes("Kasar+Alur")) {
+        targetPreset = "kasar";
+    }
+
+    setTimeout(() => {
+        resultsPanel.classList.remove('hidden');
+        startBtn.disabled = false;
+        startBtn.innerHTML = `<i class="fa-solid fa-microscope"></i> <span>MULAI ANALISIS KOMPARASI AI</span>`;
+
+        if (targetPreset === 'presisi') {
+            scoreBadge.className = "bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-black px-2.5 py-1 rounded";
+            scoreBadge.innerText = "Match: 96% (Presisi)";
+            dimStat.innerText = "96% Sesuai";
+            finishStat.innerText = "Ra 1.6 μm (Halus)";
+            safetyStat.innerText = "LULUS";
+            feedbackText.innerText = "Hasil kerja luar biasa, Cindy! Sumbu rotasi linear sangat simetris dan ketebalan berada pada toleransi nominal 24.97 mm (Target: 25.00 mm). Tidak ada deviasi signifikan. Silakan kumpulkan ke Dosen Septian Eko Candra.";
+        } else if (targetPreset === 'cacat-dimensi') {
+            scoreBadge.className = "bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 text-xs font-black px-2.5 py-1 rounded";
+            scoreBadge.innerText = "Match: 72% (Deviasi)";
+            dimStat.innerText = "72% Presisi";
+            finishStat.innerText = "Ra 1.8 μm";
+            safetyStat.innerText = "LULUS";
+            feedbackText.innerText = "Peringatan Dimensi: Langkah pemakanan kedua Anda terukur Ø 19.30 mm (Target: 18.00 mm), menunjukkan kelebihan ketebalan +1.30 mm di luar toleransi ±0.05 mm. Saran Perbaikan: Lakukan pemakanan finishing sejauh 0.65 mm radial untuk mencapai diameter nominal.";
+        } else {
+            scoreBadge.className = "bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 text-xs font-black px-2.5 py-1 rounded";
+            scoreBadge.innerText = "Match: 54% (Kasar)";
+            dimStat.innerText = "54% Presisi";
+            finishStat.innerText = "Ra 4.8 μm (Kasar)";
+            safetyStat.innerText = "PERINGATAN";
+            feedbackText.innerText = "Umpan Balik Teknis: Nilai kekasaran permukaan terdeteksi sangat tinggi. Ini mengindikasikan kelajuan feed rate yang terlalu cepat atau ujung pahat bubut rata kanan sudah tumpul/gompel. Perbaikan: Asah pahat menggunakan gerinda potong dan kurangi laju geser eretan.";
+        }
+
+        showQuickAlert("Analisis komparatif AR & AI selesai diproses!");
+        resultsPanel.scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+}
         // Simplification toggling logic
         let isSimplified = false;
-        function simplifyJobsheet() {
-            isSimplified = !isSimplified;
-            const steps = document.getElementById('jobsheet-steps-container');
-            const tujuan = document.getElementById('jobsheet-tujuan');
+function simplifyJobsheet() {
+    isSimplified = !isSimplified;
+    const steps = document.getElementById('jobsheet-steps-container');
+    if (!steps) return;
 
-            if (steps && tujuan) {
-                if (isSimplified) {
-                    tujuan.innerText = "Tujuan Singkat: Memasang pahat lurus senter, membubut rata permukaan depan, dan mereduksi diameter poros sesuai gambar.";
-                    steps.innerHTML = `
-                        <div class="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold shrink-0">1</span>
-                            <p class="text-xs text-slate-800 dark:text-slate-200 font-bold">Wajib gunakan kacamata pelindung, wearpack lengkap, dan hidupkan sekering listrik.</p>
-                        </div>
-                        <div class="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold shrink-0">2</span>
-                            <p class="text-xs text-slate-800 dark:text-slate-200 font-bold">Atur ujung pahat sejajar garis senter kepala lepas menggunakan pelat tipis.</p>
-                        </div>
-                        <div class="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold shrink-0">3</span>
-                            <p class="text-xs text-slate-800 dark:text-slate-200 font-bold">Kencangkan material silindris pada cekam secara simetris agar tidak bergetar.</p>
-                        </div>
-                    `;
-                    showQuickAlert("AI Berhasil menyederhanakan bahasa instruksi Jobsheet.");
-                } else {
-                    // Reset to normal values
-                    tujuan.innerText = "Mahasiswa vokasional UNNES harus menguasai penyusunan seting pahat lurus, pembubutan rata muka (facing), serta pembubutan poros bertingkat linear dengan batas toleransi penyimpangan maksimal 0.05 mm.";
-                    steps.innerHTML = `
-                        <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">1</span>
-                            <div class="text-xs space-y-1">
-                                <h5 class="font-extrabold text-slate-900 dark:text-white">Gunakan Alat Pelindung Diri (K3)</h5>
-                                <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Pakai kacamata safety untuk perlindungan dari serpihan gram logam panas, lalu aktifkan MCB panel kelistrikan utama.</p>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">2</span>
-                            <div class="text-xs space-y-1">
-                                <h5 class="font-extrabold text-slate-900 dark:text-white">Penyelarasan Ketinggian Pahat (Toolpost Alignment)</h5>
-                                <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Letakkan pahat bubut rata kanan pada tool post, atur pelat pengganjal setinggi senter putar kepala lepas.</p>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">3</span>
-                            <div class="text-xs space-y-1">
-                                <h5 class="font-extrabold text-slate-900 dark:text-white">Pencekaman Benda Kerja Silindris</h5>
-                                <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Jepit material logam ke rahang chuck menggunakan kunci pas khusus secara senter presisi agar putaran stabil.</p>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-        }
+    if (isSimplified) {
+        steps.innerHTML = `
+            <div class="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                <p class="text-xs text-slate-800 dark:text-slate-200 font-bold">Kencangkan benda silindris pada cekam secara presisi di mesin bubut fisik Anda.</p>
+            </div>
+            <div class="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                <p class="text-xs text-slate-800 dark:text-slate-200 font-bold">Sayat material rata memanjang sesuai batas diameter yang tertera di gambar teknik.</p>
+            </div>
+            <div class="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                <p class="text-xs text-slate-800 dark:text-slate-200 font-bold">Foto silinder besi Anda bersama hologram AR, dan unggah untuk penilaian AI Marcha.</p>
+            </div>
+        `;
+        showQuickAlert("Marcha AI menyederhanakan bahasa instruksi Jobsheet.");
+    } else {
+        steps.innerHTML = `
+            <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">1</span>
+                <div class="text-xs space-y-1">
+                    <h5 class="font-extrabold text-slate-900 dark:text-white">Pencekaman & Penyetelan Mesin Fisik</h5>
+                    <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Pasang benda kerja silinder logam aluminium pada cekam rahang tiga (chuck) di bengkel UNNES secara senter.</p>
+                </div>
+            </div>
+            <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">2</span>
+                <div class="text-xs space-y-1">
+                    <h5 class="font-extrabold text-slate-900 dark:text-white">Penyayatan Bertingkat Linear</h5>
+                    <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Lakukan pembubutan facing dan bubut bertingkat memanjang sesuai spesifikasi gambar teknik di atas.</p>
+                </div>
+            </div>
+            <div class="p-4 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-200 dark:border-blue-900 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#4DA6FF] text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">3</span>
+                <div class="text-xs space-y-1">
+                    <h5 class="font-extrabold text-slate-900 dark:text-white">Pemindaian Komparatif AR (Kirim ke Marcha)</h5>
+                    <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Letakkan komponen hasil bubutan fisik Anda, bidik foto bersama cetak hologram AR, lalu unggah fotonya di bawah untuk dinilai oleh AI.</p>
+                </div>
+            </div>
+        `;
+    }
+}
 
         // Cam Jargon dictionary
         function translateJargon(term) {
@@ -3838,5 +4574,76 @@
                 </div>`).join('');
         }
     </script>
+    <script type="module">
+  // 1. Import Modul Firebase (Gunakan versi CDN modular)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+  // 2. GANTI DENGAN FIREBASE CONFIG KAMU SENDIRI!
+  // Kamu bisa copas dari Project Settings di Firebase Console
+  const firebaseConfig = {
+    apiKey: "AQ.Ab8RN6IZpqiUrUBuCnikmkBTIaPgM9D1pZt5vo91KInDi6MZjA",
+    authDomain: "marcha-cf9b5.firebaseapp.com",
+    projectId: "marcha-cf9b5",
+    storageBucket: "marcha-cf9b5.appspot.com",
+    messagingSenderId: "202297526826",
+    appId: "1:202297526826:web:858fe79a1b224321299153"
+  };
+
+  // 3. Inisialisasi Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // 4. Logika Form Pendaftaran (Daftar Akun)
+  // Pastikan ID elemen di bawah ('btn-daftar', 'input-email', dll) SAMA dengan ID yang ada di form HTML kamu!
+  const btnDaftar = document.getElementById('btn-daftar');
+  
+  if (btnDaftar) {
+      btnDaftar.addEventListener('click', async (e) => {
+          e.preventDefault(); // Mencegah halaman refresh
+          
+          // Ambil nilai yang diketik user
+          const email = document.getElementById('input-email').value;
+          const password = document.getElementById('input-password').value;
+          const nama = document.getElementById('input-nama').value; // Misal kolom nama/NIM
+          const role = document.getElementById('select-role').value; // Dropdown Mahasiswa/Dosen
+
+          try {
+              // A. Buat akun di Firebase Auth
+              const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+              const user = userCredential.user;
+
+              // B. Simpan data tambahan & ROLE ke Firestore
+              await setDoc(doc(db, "users", user.uid), {
+                  email: email,
+                  nama: nama,
+                  role: role, 
+                  createdAt: new Date()
+              });
+
+              alert("Pendaftaran Berhasil sebagai " + role);
+              
+              // C. Panggil fungsi yang sudah ada di kodemu untuk mengubah tampilan
+              // Jika fungsi setUserRole ada di luar module ini, pastikan fungsinya bisa diakses (misal window.setUserRole)
+              if(typeof setUserRole === "function") {
+                  setUserRole(role); 
+              } else if (typeof window.setUserRole === "function") {
+                  window.setUserRole(role);
+              }
+
+          } catch (error) {
+              console.error("Error Daftar:", error.code);
+              // Tampilkan pesan error yang ramah (seperti di screenshot pertama)
+              if (error.code === 'auth/email-already-in-use') {
+                  alert("Email ini sudah terdaftar. Silakan ke halaman Login!");
+              } else {
+                  alert("Gagal mendaftar: " + error.message);
+              }
+          }
+      });
+  }
+</script>
 </body>
 </html>
