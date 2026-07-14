@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Three.js CDN for 3D/AR Simulation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -1524,7 +1525,7 @@
                                 </div>
                                 <div class="flex items-center gap-3 p-2.5 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-100 dark:border-blue-900/40">
                                     <i class="fa-solid fa-chalkboard-user text-blue-400 w-4 text-center shrink-0"></i>
-                                    <div><p class="text-[10px] text-slate-500 dark:text-slate-400">Dosen Pengampu</p><p class="font-bold text-slate-900 dark:text-white">Septian Eko Cahyanto, S.Pd., M.Pd.</p></div>
+                                    <div><p class="text-[10px] text-slate-500 dark:text-slate-400">Dosen Pengampu</p><p class="font-bold text-slate-900 dark:text-white">Septian Eko Cahnyanto, S.Pd., M.Pd.</p></div>
                                 </div>
                                 <div class="flex items-center gap-3 p-2.5 bg-[#F5FAFF] dark:bg-[#0B1E3D] rounded-xl border border-blue-100 dark:border-blue-900/40">
                                     <i class="fa-solid fa-envelope text-blue-400 w-4 text-center shrink-0"></i>
@@ -1737,7 +1738,7 @@
                 <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-5 rounded-3xl border border-blue-300/40 dark:border-blue-900">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
                         <div>
-                            <span class="bg-blue-500 text-white text-[9px] font-black uppercase px-2 py-1 rounded-md tracking-wider">Tugas Aktif Dari: Septian Eko Cahyanto, S.Pd., M.Pd.</span>
+                            <span class="bg-blue-500 text-white text-[9px] font-black uppercase px-2 py-1 rounded-md tracking-wider">Tugas Aktif Dari: Septian Eko Cahnyanto, S.Pd., M.Pd.</span>
                             <h3 class="text-base font-extrabold mt-1 text-slate-900 dark:text-white" id="assigned-task-title">Poros Bertingkat Silindris (TM-BKT-02)</h3>
                             <p class="text-xs text-slate-600 dark:text-slate-300">Batas Toleransi Deviasi: <span class="font-extrabold text-blue-600 dark:text-[#00D4FF]">± 0.05 mm</span></p>
                         </div>
@@ -1752,24 +1753,14 @@
                     <div class="relative bg-slate-900 rounded-2xl h-64 overflow-hidden flex items-center justify-center border border-slate-800 dark:border-[#10284F]">
                         <!-- 2D View -->
                         <div id="target-view-2d" class="absolute inset-0 flex flex-col justify-center items-center p-4 bg-white dark:bg-[#0B1E3D] text-slate-800 dark:text-slate-100">
-                            <div class="w-full max-w-md border-2 border-dashed border-blue-400 p-4 rounded-xl flex flex-col items-center justify-center bg-blue-50/20">
-                                <i class="fa-solid fa-drafting-compass text-4xl text-blue-500 mb-2"></i>
-                                <span class="font-mono text-[10px] text-slate-800 dark:text-slate-200 text-center leading-relaxed">
-                                    <strong>BLUEPRINT PROYEKSI AMERIKA</strong><br>
-                                    Step 1: Ø 25.00mm x 40.00mm | Step 2: Ø 18.00mm x 30.00mm<br>
-                                    Chamfer: 1.50mm x 45°
-                                </span>
-                            </div>
+                            <img src="assets/blueprint_part3.png" alt="Blueprint Part3" class="max-h-full max-w-full object-contain rounded-lg border border-blue-200 dark:border-blue-900 shadow-sm">
                         </div>
 
                         <!-- 3D View -->
-                        <div id="target-view-3d" class="absolute inset-0 hidden flex justify-center items-center bg-slate-950">
-                            <div class="text-center text-white pointer-events-none z-10">
-                                <p class="text-xs font-bold text-slate-200">3D Target Component Mesh</p>
-                                <p class="text-[10px] text-slate-400">Seret mouse di area viewport untuk memutar model target</p>
-                            </div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <i class="fa-solid fa-cube text-6xl text-cyan-400/30 animate-pulse"></i>
+                        <div id="target-view-3d" class="absolute inset-0 hidden bg-slate-950">
+                            <div id="jobsheet-3d-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+                            <div class="absolute top-3 left-3 text-white text-[10px] font-bold bg-black/50 px-2 py-1 rounded pointer-events-none">
+                                Seret untuk memutar model
                             </div>
                         </div>
 
@@ -4116,6 +4107,88 @@
             recBox.innerHTML = recHtml;
         }
 
+        // ===== 3D VIEWER UNTUK SMART JOBSHEET (GLB LOADER) =====
+let js3dScene, js3dCamera, js3dRenderer, js3dModelGroup, js3dInitialized = false;
+
+function initJobsheet3D() {
+    const container = document.getElementById('jobsheet-3d-canvas');
+    if (!container || js3dInitialized) return;
+    js3dInitialized = true;
+
+    js3dScene = new THREE.Scene();
+    js3dScene.background = new THREE.Color(0x020617);
+
+    js3dCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    js3dCamera.position.set(0, 2, 6);
+
+    js3dRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    js3dRenderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(js3dRenderer.domElement);
+
+    js3dScene.add(new THREE.AmbientLight(0xffffff, 0.8));
+    const dLight = new THREE.DirectionalLight(0x4da6ff, 1);
+    dLight.position.set(5, 5, 5);
+    js3dScene.add(dLight);
+    const pLight = new THREE.PointLight(0x00c2ff, 1, 10);
+    pLight.position.set(-2, 2, 2);
+    js3dScene.add(pLight);
+
+    js3dModelGroup = new THREE.Group();
+    js3dScene.add(js3dModelGroup);
+
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+    'assets/tugas_marcha.glb', // <-- SESUAIKAN path/nama file GLB kamu di sini
+        (gltf) => {
+            const model = gltf.scene;
+            // Auto-center & auto-scale biar model pas di tengah frame
+            const box = new THREE.Box3().setFromObject(model);
+            const size = new THREE.Vector3();
+            box.getSize(size);
+            const center = new THREE.Vector3();
+            box.getCenter(center);
+            model.position.sub(center);
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 3 / maxDim;
+            model.scale.setScalar(scale);
+            js3dModelGroup.add(model);
+        },
+        undefined,
+        (err) => console.error('Gagal memuat model GLB:', err)
+    );
+
+    // Drag untuk rotasi manual
+    let isDragging = false;
+    let prev = { x: 0, y: 0 };
+    container.addEventListener('mousedown', () => { isDragging = true; });
+    container.addEventListener('mousemove', (e) => {
+        const delta = { x: e.offsetX - prev.x, y: e.offsetY - prev.y };
+        if (isDragging) {
+            js3dModelGroup.rotation.y += delta.x * 0.008;
+            js3dModelGroup.rotation.x += delta.y * 0.008;
+        }
+        prev = { x: e.offsetX, y: e.offsetY };
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    window.addEventListener('resize', () => {
+        if (!container || !js3dCamera || !js3dRenderer) return;
+        js3dCamera.aspect = container.clientWidth / container.clientHeight;
+        js3dCamera.updateProjectionMatrix();
+        js3dRenderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    animateJobsheet3D();
+}
+
+function animateJobsheet3D() {
+    requestAnimationFrame(animateJobsheet3D);
+    if (js3dModelGroup) js3dModelGroup.rotation.y += 0.003;
+    if (js3dRenderer && js3dScene && js3dCamera) {
+        js3dRenderer.render(js3dScene, js3dCamera);
+    }
+}
+
         function toggleVisualMode(mode) {
     const container2d = document.getElementById('target-view-2d');
     const container3d = document.getElementById('target-view-3d');
@@ -4137,9 +4210,18 @@
         container2d.classList.remove('hidden');
         btn2d.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
     } else if (mode === '3d') {
-        container3d.classList.remove('hidden');
-        btn3d.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
-    } else if (mode === 'ar') {
+    container3d.classList.remove('hidden');
+    btn3d.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
+    setTimeout(() => {
+        initJobsheet3D();
+        if (js3dRenderer && js3dCamera) {
+            const c = document.getElementById('jobsheet-3d-canvas');
+            js3dRenderer.setSize(c.clientWidth, c.clientHeight);
+            js3dCamera.aspect = c.clientWidth / c.clientHeight;
+            js3dCamera.updateProjectionMatrix();
+        }
+    }, 50);
+} else if (mode === 'ar') {
         containerAr.classList.remove('hidden');
         btnAr.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4DA6FF] text-white shadow";
     }
@@ -4202,7 +4284,7 @@ function runArVisionAnalysis() {
             dimStat.innerText = "96% Sesuai";
             finishStat.innerText = "Ra 1.6 μm (Halus)";
             safetyStat.innerText = "LULUS";
-            feedbackText.innerText = "Hasil kerja luar biasa, Cindy! Sumbu rotasi linear sangat simetris dan ketebalan berada pada toleransi nominal 24.97 mm (Target: 25.00 mm). Tidak ada deviasi signifikan. Silakan kumpulkan ke Dosen Septian Eko Cahyanto.";
+            feedbackText.innerText = "Hasil kerja luar biasa, Cindy! Sumbu rotasi linear sangat simetris dan ketebalan berada pada toleransi nominal 24.97 mm (Target: 25.00 mm). Tidak ada deviasi signifikan. Silakan kumpulkan ke Dosen Septian Eko Cahnyanto.";
         } else if (targetPreset === 'cacat-dimensi') {
             scoreBadge.className = "bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 text-xs font-black px-2.5 py-1 rounded";
             scoreBadge.innerText = "Match: 72% (Deviasi)";
